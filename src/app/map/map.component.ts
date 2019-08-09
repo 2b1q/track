@@ -23,6 +23,8 @@ export class MapComponent implements OnInit {
 
   snapshot: Snapshot;
   currentLatLng: CurrentLatLng;
+  totalWeight: number;
+  cargoWeight: number;
 
   ngOnInit() {
     this.activity = this.mapService.getTrack(+this.route.snapshot.params.id);
@@ -39,6 +41,8 @@ export class MapComponent implements OnInit {
       const snapshot = SAVED_SNAPSHOTS[snapshotId];
       snapshot.gps = value;
       this.snapshot = snapshot;
+      this.cargoWeight = this.snapshot.cargoWeight;
+      this.totalWeight = this.snapshot.totalWeight;
 
       console.log(this.snapshot);
     });

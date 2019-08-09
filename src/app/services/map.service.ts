@@ -3,9 +3,9 @@ import { TrackList } from 'src/shared/track-list.interface';
 import { SAVED_ACTIVITIES } from 'src/shared/tracks';
 import { Subject } from 'rxjs';
 import { CurrentLatLng } from 'src/shared/map.interfaces';
+import { environment } from 'src/environments/environment.prod';
 
-const apiToken =
-  'pk.eyJ1IjoiMmIxcSIsImEiOiJjanoxNnM5MnEwMmN6M2R0OXJyam4zdzY5In0.QLBIIA-E76JN0xELrLW4Cw';
+const apiToken = environment.api_token;
 declare var omnivore: any;
 declare var L: any;
 

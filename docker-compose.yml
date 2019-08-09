@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+    wj_trucks_way_ui:
+        build:
+            context: .
+        command: npm start
+        container_name: wj_trucks_way_ui
+        restart: always
+        networks:
+            - wayjournal-net
+        ports:
+            - "4200:4200"
+
+networks:
+  wayjournal-net:
+
+volumes:
+  db-data:

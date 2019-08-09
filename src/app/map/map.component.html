@@ -22,13 +22,32 @@
   </div>
   <div class="col-md-9">
     <!-- <div class="data-heading">Комментарии:</div> -->
-    <hr />
+    <!-- <hr />
     <p>{{ activityComments }}</p>
     <p>{{ snapshot.gps }}</p>
     <p>{{ snapshot.vehicleId }}</p>
     <p>{{ snapshot.totalWeight }}</p>
-    <p>{{ snapshot.cargoWeight }}</p>
-    <p>{{ snapshot.data }}</p>
-    <hr />
+    <p>{{ snapshot.cargoWeight }}</p> -->
+    <!-- <p>{{ snapshot.data }}</p> -->
+    <!-- <hr /> -->
+
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="row">комментарии</th>
+          <th scope="row">координаты</th>
+          <th scope="row">общий вес</th>
+          <th scope="row">вес груза</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ activityComments }}</td>
+          <td *ngIf="currentLatLng as value">{{ value }}</td>
+          <td *ngIf="totalWeight as value">{{ value }}</td>
+          <td *ngIf="cargoWeight as value">{{ value }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
