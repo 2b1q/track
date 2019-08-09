@@ -1,0 +1,41 @@
+.row-runs {
+  background-color: rgba(255, 255, 255, 0.94);
+  padding: 10px 32px;
+}
+
+td {
+  font-size: 1.4em;
+  font-family: 'Coming Soon';
+}
+
+table>tbody>tr:hover {
+  background-color: rgb(114, 151, 221);
+}
+
+td>a {
+  color: #ff1744;
+}
+
+td>a:hover {
+  text-decoration: none;
+  color: #ff5252;
+}
+
+hr {
+  border-color: #ddd;
+}
+
+.summary {
+  font-size: 1.4em;
+}
+
+.heading {
+  /* font-family: 'Coming Soon'; */
+}
+
+.totals {
+  display: inline;
+  font-family: 'Coming Soon';
+  color: #333;
+  margin: 2px;
+}

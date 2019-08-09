@@ -1,0 +1,35 @@
+<div class="row row-runs">
+  <h4 class="heading">Маршруты грузовиков</h4>
+  <hr />
+  <div class="summary">
+    Общая дистанция
+    <p class="totals">{{ totalTracks }}</p>
+    маршрутов:
+    <p class="totals">{{ totalDistance }}</p>
+    км
+    <!-- <p class="totals">{{ firstDate | date: 'longDate'}}</p> -->
+  </div>
+  <hr />
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Маршрут</th>
+        <!-- <th>Comments</th> -->
+        <th>Дата</th>
+        <th>Дистанция</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let track of tracks">
+        <td>
+          <a [routerLink]="['/track', track.id]">
+            {{ track.name }}
+          </a>
+        </td>
+        <!-- <td>{{ track.comments }}</td> -->
+        <td>{{ track.date | date:"dd.MM.yyyy"}}</td>
+        <td>{{ track.distance }} км</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,34 @@
+<div class="row row-map">
+  <div class="col-md-9">
+    <h2 class="heading">Трэк</h2>
+    <hr />
+    <div id="map"></div>
+  </div>
+  <div class="col-md-3 info-container">
+    <div id="run-info">
+      <h2 class="heading">Общая информация</h2>
+      <hr />
+      <div class="data-heading">Маршрут:</div>
+      <p class="data-entry">{{ activityName }}</p>
+      <hr />
+
+      <div class="data-heading">Дата:</div>
+      <p class="data-entry">{{ activityDate | date:"dd.MM.yyyy" }} <p>
+          <hr />
+          <div class="data-heading">Общая дистанция:</div>
+          <p class="data-entry">{{ activityDistance }} км</p>
+          <hr />
+    </div>
+  </div>
+  <div class="col-md-9">
+    <!-- <div class="data-heading">Комментарии:</div> -->
+    <hr />
+    <p>{{ activityComments }}</p>
+    <p>{{ snapshot.gps }}</p>
+    <p>{{ snapshot.vehicleId }}</p>
+    <p>{{ snapshot.totalWeight }}</p>
+    <p>{{ snapshot.cargoWeight }}</p>
+    <p>{{ snapshot.data }}</p>
+    <hr />
+  </div>
+</div>
