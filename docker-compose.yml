@@ -3,7 +3,7 @@ services:
     wj_trucks_way_ui:
         build:
             context: .
-        command: npm start
+        command: ng serve --host 0.0.0.0
         container_name: wj_trucks_way_ui
         restart: always
         networks:
