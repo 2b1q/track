@@ -32,6 +32,8 @@ export const SAVED_SNAPSHOTS: Snapshot[] = [
     id: 1,
     vehicleId: '3601bd57-4ed7-4e11-941f-63d21c03a6d7',
     axises: 4,
+    vehicleAxises: 2,
+    trailerAxises: 2,
     totalWeight: 21334,
     cargoWeight: 7134,
     data: [{ weight: 0, lifted: false, axisId: 1 }],
@@ -44,6 +46,8 @@ export const SAVED_SNAPSHOTS: Snapshot[] = [
     id: 2,
     vehicleId: 'f52ed328-8d3c-46be-8b43-d225a1a1cc00',
     axises: 4,
+    vehicleAxises: 2,
+    trailerAxises: 2,
     totalWeight: 28116,
     cargoWeight: 13760,
     gps: {
@@ -55,8 +59,10 @@ export const SAVED_SNAPSHOTS: Snapshot[] = [
     id: 3,
     vehicleId: 'bcf79c56-f80a-4632-a00d-ce9c3a7775ac',
     axises: 5,
-    totalWeight: 35589,
-    cargoWeight: 19342,
+    vehicleAxises: 2,
+    trailerAxises: 3,
+    totalWeight: 31200,
+    cargoWeight: 16620,
     gps: {
       lat: 0.0,
       lng: 0.0

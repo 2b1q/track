@@ -18,6 +18,8 @@ export interface SnapshotData {
 export interface Snapshot {
   id: number;
   vehicleId: string;
+  vehicleAxises: number;
+  trailerAxises: number;
   axises: number;
   timestamp?: string;
   totalWeight: number;

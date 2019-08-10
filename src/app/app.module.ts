@@ -11,16 +11,23 @@ import { TrackListComponent } from './track-list/track-list.component';
 import { appRoutes } from 'src/routes';
 import { MapService } from './services/map.service';
 import { TrackService } from './services/track.service';
+import { TrackComponent } from './track/track.component';
+import { AxisService } from 'src/shared/axis.service';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, TrackListComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    TrackListComponent,
+    TrackComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [MapService, TrackService],
+  providers: [MapService, TrackService, AxisService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

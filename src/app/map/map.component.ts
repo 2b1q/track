@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../services/map.service';
-import { TrackList, Snapshot } from '../../shared/track-list.interface';
+import {
+  TrackList,
+  Snapshot,
+  SnapshotData
+} from '../../shared/track-list.interface';
 
 import { ActivatedRoute } from '@angular/router';
 import { CurrentLatLng } from 'src/shared/map.interfaces';
 import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
+import { AxisService } from 'src/shared/axis.service';
 
 @Component({
   selector: 'app-map',
@@ -12,7 +17,11 @@ import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  constructor(private mapService: MapService, private route: ActivatedRoute) {}
+  constructor(
+    private mapService: MapService,
+    private route: ActivatedRoute,
+    private axis: AxisService
+  ) {}
 
   activity: any;
   activityName: string;
@@ -25,6 +34,7 @@ export class MapComponent implements OnInit {
   currentLatLng: CurrentLatLng;
   totalWeight: number;
   cargoWeight: number;
+  data: SnapshotData[];
 
   ngOnInit() {
     this.activity = this.mapService.getTrack(+this.route.snapshot.params.id);
@@ -41,10 +51,17 @@ export class MapComponent implements OnInit {
       const snapshot = SAVED_SNAPSHOTS[snapshotId];
       snapshot.gps = value;
       this.snapshot = snapshot;
+
       this.cargoWeight = this.snapshot.cargoWeight;
       this.totalWeight = this.snapshot.totalWeight;
 
-      console.log(this.snapshot);
+      this.data = this.axis.getLoads(
+        this.snapshot.cargoWeight,
+        this.snapshot.axises
+      );
+
+      console.log(this.data);
+      // console.log(this.snapshot);
     });
   }
 }
