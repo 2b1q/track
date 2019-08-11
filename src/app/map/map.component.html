@@ -35,13 +35,17 @@
           <tr>
             <td>{{ activityComments }}</td>
             <td *ngIf="currentLatLng as value">{{ value }}</td>
-            <td *ngIf="totalWeight as value">{{ value }}</td>
-            <td *ngIf="cargoWeight as value">{{ value }}</td>
+            <td *ngIf="totalWeight as value">{{ value }} кг</td>
+            <td *ngIf="cargoWeight as value">{{ value }} кг</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <ul>
+        <li *ngFor="let axis of data">нагрузка на ось {{ axis.axisId }}: {{ axis.weight }} кг</li>
+      </ul>
+    </div>
   </ng-container>
 </div>
 

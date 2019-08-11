@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
       this.totalWeight = this.snapshot.totalWeight;
 
       this.data = this.axis.getLoads(
-        this.snapshot.cargoWeight,
+        this.snapshot.totalWeight,
         this.snapshot.axises
       );
 

@@ -3,8 +3,11 @@ import { SnapshotData } from './track-list.interface';
 
 @Injectable()
 export class AxisService {
+  private operator = '-';
   getRandom(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
+    const add = Math.round(Math.random() * (max - min) + min);
+    this.operator = this.operator === '-' ? '+' : '-'; // revert operator
+    return parseInt(`${this.operator}${add}`, 10);
   }
 
   getLoads(cargoWeight: number, axises: number): SnapshotData[] {
@@ -21,34 +24,36 @@ export class AxisService {
       if (i === 1) {
         snapshot.lifted = false; // always false
         snapshot.weight = Math.round(
-          cargoWeight * 0.43 + this.getRandom(10, 50)
+          cargoWeight * 0.4 + this.getRandom(10, 50)
         ); // 40-43% weight of total cargo
       }
       // 2nd vehicle axis
       if (i === 2) {
         snapshot.lifted = false; // always false
-        snapshot.weight = Math.round(cargoWeight * 0.2 + this.getRandom(5, 40)); // 20-24% weight of total cargo
+        snapshot.weight = Math.round(
+          cargoWeight * 0.24 + this.getRandom(5, 40)
+        ); // 20-24% weight of total cargo
       }
       if (axises === 5) {
         // 1st trailer axis
         if (i === 3) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.11 + this.getRandom(10, 80)
+            cargoWeight * 0.12 + this.getRandom(10, 80)
           ); // 10-12% weight of total cargo
         }
         // 2nd trailer axis
         if (i === 4) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.12 + this.getRandom(10, 40)
+            cargoWeight * 0.13 + this.getRandom(10, 40)
           ); // 12-12.5% weight of total cargo
         }
         // 3d trailer axis
         if (i === 5) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.1 + this.getRandom(30, 60)
+            cargoWeight * 0.11 + this.getRandom(30, 60)
           ); // 10.7% weight of total cargo
         }
       }
