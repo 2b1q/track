@@ -1,29 +1,122 @@
 import { Injectable } from '@angular/core';
-import { TrackList } from 'src/shared/track-list.interface';
-import { SAVED_ACTIVITIES } from 'src/shared/tracks';
-import { Subject } from 'rxjs';
+import { SAVED_ACTIVITIES, CURRENT_ACTIVITIES } from 'src/shared/tracks';
 import { CurrentLatLng } from 'src/shared/map.interfaces';
 import { environment } from 'src/environments/environment.prod';
+
+import * as mapboxgl from 'mapbox-gl';
+
+import { Subject, from, Observable, of } from 'rxjs';
+import { concatMap, delay } from 'rxjs/operators';
+import { IGeoJson } from 'src/shared/geojson.class';
 
 const apiToken = environment.api_token;
 declare var omnivore: any;
 declare var L: any;
 
-const defaultCoords: number[] = [40, -80];
+const defaultCoords: number[] = [55.751244, 37.618423]; // MSK
 const defaultZoom = 8;
 
 @Injectable()
 export class MapService {
   subject: Subject<CurrentLatLng>;
+  $track: Observable<any>;
+
+  // map-box properties
+  private mapB: mapboxgl.Map;
+  // private coordinates: Array<number[]> = [];
+
+  private start: IGeoJson;
+  private allTrack: IGeoJson;
 
   constructor() {
     this.subject = new Subject();
   }
 
+  initMapBox(coord: Array<number>, style: string) {
+    /// default settings
+    mapboxgl.accessToken = apiToken;
+    this.mapB = new mapboxgl.Map({
+      container: 'map',
+      style,
+      zoom: 13,
+      center: [37.618423, 55.751244]
+    });
+  }
+
+  // get track from SAVED_ACTIVITIES
   getTrack(id: number) {
     return SAVED_ACTIVITIES.slice(0).find(run => run.id === id);
   }
 
+  getCurrentTrack(id: number) {
+    // tslint:disable-next-line:triple-equals
+    return CURRENT_ACTIVITIES.filter(track => track.id == id);
+  }
+
+  // plot current track
+  // TODO https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+  plotCurrentTrack(id: number) {
+    this.initMapBox(
+      [37.618423, 55.751244],
+      'mapbox://styles/mapbox/outdoors-v9'
+      // 'mapbox://styles/mapbox/satellite-v9'
+    );
+    this.mapB.on('load', () => {
+      console.log('on load');
+      console.log('this.start', this.start);
+      this.mapB.addSource('trace', {
+        type: 'geojson',
+        data: this.allTrack
+      });
+
+      this.mapB.addLayer({
+        id: 'trace',
+        type: 'line',
+        source: 'trace',
+        paint: {
+          'line-color': 'red',
+          'line-opacity': 0.75,
+          'line-width': 5
+        }
+      });
+
+      this.mapB.jumpTo({ center: this.start.geometry.coordinates, zoom: 14 });
+      this.mapB.setPitch(30);
+      // console.log('this.coordinates ', this.coordinates);
+      this.$track
+        .pipe(delay(3000))
+        .pipe(concatMap(position => of(position).pipe(delay(200))))
+        .subscribe(
+          currentPosition => {
+            this.allTrack.geometry.coordinates.push(currentPosition);
+            this.mapB.getSource('trace').setData(this.allTrack);
+            this.mapB.panTo(currentPosition);
+            console.log(currentPosition);
+          },
+          err => console.error('building track error: ', err),
+          () => {
+            console.log('track Builded');
+          }
+        );
+    });
+
+    // load GPX
+    omnivore
+      .gpx(CURRENT_ACTIVITIES.filter(run => run.id == id)[0].gpxData, null)
+      .on('ready', ({ target }) => {
+        console.log('GPX ready');
+        this.allTrack = target._layers[1].feature;
+        this.allTrack.geometry.coordinates.length = 0; // clear route
+        // console.log(this.allTrack);
+        this.start = target._layers[3].feature;
+        // console.log(target._layers[1].feature);
+        this.$track = from(
+          target._layers[1]._latlngs.map(({ lat, lng }) => [lng, lat])
+        );
+      });
+  }
+
+  // plot track from history
   plotTrack(id: number) {
     const myStyle = {
       color: '#3949AB', // GPS track color
@@ -38,9 +131,6 @@ export class MapService {
     L.tileLayer(
       'https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
       {
-        attribution:
-          // tslint:disable-next-line:max-line-length
-          'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
         // id: 'mapbox.dark',
         id: 'mapbox.streets',

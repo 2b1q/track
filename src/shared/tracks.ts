@@ -27,6 +27,16 @@ export const SAVED_ACTIVITIES: TrackList[] = [
   }
 ];
 
+export const CURRENT_ACTIVITIES: TrackList[] = [
+  {
+    id: 1,
+    name: 'Москва - Воронеж',
+    date: new Date(),
+    gpxData: '../../assets/gpx/4r.gpx',
+    distance: 524
+  }
+];
+
 export const SAVED_SNAPSHOTS: Snapshot[] = [
   {
     id: 1,
@@ -63,6 +73,19 @@ export const SAVED_SNAPSHOTS: Snapshot[] = [
     trailerAxises: 3,
     totalWeight: 31200,
     cargoWeight: 16620,
+    gps: {
+      lat: 0.0,
+      lng: 0.0
+    }
+  },
+  {
+    id: 4,
+    vehicleId: 'bf33c29d-6295-4887-9ab0-5a71f9579c97',
+    axises: 5,
+    vehicleAxises: 2,
+    trailerAxises: 3,
+    totalWeight: 33400,
+    cargoWeight: 18900,
     gps: {
       lat: 0.0,
       lng: 0.0

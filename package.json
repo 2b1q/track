@@ -20,12 +20,16 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "@mapbox/togeojson": "^0.16.0",
+    "@tmcw/togeojson": "^3.0.1",
     "bootstrap": "^4.3.1",
     "leaflet": "^1.5.1",
     "leaflet-omnivore": "^0.3.4",
     "mapbox": "^1.0.0-beta10",
+    "mapbox-gl": "^1.2.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "videogular2": "^7.0.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
