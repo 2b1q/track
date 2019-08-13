@@ -23,9 +23,8 @@ export class MapService {
 
   // map-box properties
   private mapB: mapboxgl.Map;
-  // private coordinates: Array<number[]> = [];
-
   private start: IGeoJson;
+  private end: IGeoJson;
   private allTrack: IGeoJson;
 
   constructor() {
@@ -33,7 +32,7 @@ export class MapService {
   }
 
   initMapBox(coord: Array<number>, style: string) {
-    /// default settings
+    // default settings
     mapboxgl.accessToken = apiToken;
     this.mapB = new mapboxgl.Map({
       container: 'map',
@@ -54,7 +53,6 @@ export class MapService {
   }
 
   // plot current track
-  // TODO https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
   plotCurrentTrack(id: number) {
     this.initMapBox(
       [37.618423, 55.751244],
@@ -64,6 +62,7 @@ export class MapService {
     this.mapB.on('load', () => {
       console.log('on load');
       console.log('this.start', this.start);
+      console.log('this.end', this.end);
       this.mapB.addSource('trace', {
         type: 'geojson',
         data: this.allTrack
@@ -82,7 +81,6 @@ export class MapService {
 
       this.mapB.jumpTo({ center: this.start.geometry.coordinates, zoom: 14 });
       this.mapB.setPitch(30);
-      // console.log('this.coordinates ', this.coordinates);
       this.$track
         .pipe(delay(3000))
         .pipe(concatMap(position => of(position).pipe(delay(200))))
@@ -91,7 +89,7 @@ export class MapService {
             this.allTrack.geometry.coordinates.push(currentPosition);
             this.mapB.getSource('trace').setData(this.allTrack);
             this.mapB.panTo(currentPosition);
-            console.log(currentPosition);
+            // console.log(currentPosition);
           },
           err => console.error('building track error: ', err),
           () => {
@@ -102,6 +100,7 @@ export class MapService {
 
     // load GPX
     omnivore
+      // tslint:disable-next-line:triple-equals
       .gpx(CURRENT_ACTIVITIES.filter(run => run.id == id)[0].gpxData, null)
       .on('ready', ({ target }) => {
         console.log('GPX ready');
@@ -109,7 +108,8 @@ export class MapService {
         this.allTrack.geometry.coordinates.length = 0; // clear route
         // console.log(this.allTrack);
         this.start = target._layers[3].feature;
-        // console.log(target._layers[1].feature);
+        this.end = target._layers[4].feature;
+        // create Observable stream
         this.$track = from(
           target._layers[1]._latlngs.map(({ lat, lng }) => [lng, lat])
         );
@@ -164,9 +164,5 @@ export class MapService {
         .setContent(e.latlng.toString())
         .openOn(map);
     }
-
-    // this.subject.subscribe(event => {
-    //   L.marker([event.lat, event.lng]).addTo(map);
-    // });
   }
 }
