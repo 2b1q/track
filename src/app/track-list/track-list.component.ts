@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TrackList } from '../../shared/track-list.interface';
+import { TrackList } from '../../shared/track.interface';
 import { TrackService } from '../services/track.service';
 
 @Component({

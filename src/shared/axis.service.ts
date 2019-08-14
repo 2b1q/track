@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SnapshotData } from './track-list.interface';
+import { SnapshotData } from './track.interface';
 
 @Injectable()
 export class AxisService {

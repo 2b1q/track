@@ -1,4 +1,4 @@
-import { TrackList, Snapshot } from './track-list.interface';
+import { TrackList, Snapshot } from './track.interface';
 
 export const SAVED_ACTIVITIES: TrackList[] = [
   {

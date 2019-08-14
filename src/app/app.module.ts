@@ -6,10 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-
 import { MapComponent } from './map/map.component';
 import { TrackListComponent } from './track-list/track-list.component';
 import { TrackComponent } from './track/track.component';
+
 import { appRoutes } from 'src/routes';
 
 import { MapService } from './services/map.service';

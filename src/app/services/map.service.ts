@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { SAVED_ACTIVITIES, CURRENT_ACTIVITIES } from 'src/shared/tracks';
-import { CurrentLatLng } from 'src/shared/map.interfaces';
 import { environment } from 'src/environments/environment.prod';
+
+import { SAVED_ACTIVITIES, CURRENT_ACTIVITIES } from 'src/shared/tracks';
+import { CurrentLatLng, IGeoJson } from 'src/shared/track.interface';
 
 import * as mapboxgl from 'mapbox-gl';
 
 import { Subject, from, Observable, of } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
-import { IGeoJson } from 'src/shared/geojson.class';
 
 const apiToken = environment.api_token;
 declare var omnivore: any;
@@ -20,6 +20,8 @@ const defaultZoom = 8;
 export class MapService {
   subject: Subject<CurrentLatLng>;
   $track: Observable<any>;
+
+  $pointInfo: Observable<any>;
 
   // map-box properties
   private mapB: mapboxgl.Map;
@@ -38,7 +40,7 @@ export class MapService {
       container: 'map',
       style,
       zoom: 13,
-      center: [37.618423, 55.751244]
+      center: coord
     });
   }
 
@@ -154,8 +156,6 @@ export class MapService {
         const { latlng } = e;
         this.subject.next(latlng);
       })
-      // .bindPopup('')
-      // .openPopup()
       .addTo(map);
 
     function onMapClick(e) {

@@ -1,4 +1,20 @@
-import { CurrentLatLng } from './map.interfaces';
+export interface CurrentLatLng {
+  lat: number;
+  lng: number;
+}
+
+// GeoJson intarfaces
+export interface IGeometry {
+  type: string;
+  coordinates: number[];
+}
+
+export interface IGeoJson {
+  type: string;
+  geometry: IGeometry;
+  properties?: any;
+  $key?: string;
+}
 
 export interface TrackList {
   id: number;
@@ -30,8 +46,9 @@ export interface Snapshot {
   // user?: User;
 }
 
-export interface SnapshotData {
-  weight: number;
-  lifted: boolean;
-  axisId: number;
+// current position info
+export interface PositionInfo {
+  point: IGeoJson;
+  currentSpeed: number;
+  snapshot: Snapshot;
 }

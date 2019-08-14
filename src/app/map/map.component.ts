@@ -3,11 +3,11 @@ import { MapService } from '../services/map.service';
 import {
   TrackList,
   Snapshot,
-  SnapshotData
-} from '../../shared/track-list.interface';
+  SnapshotData,
+  CurrentLatLng
+} from '../../shared/track.interface';
 
 import { ActivatedRoute } from '@angular/router';
-import { CurrentLatLng } from 'src/shared/map.interfaces';
 import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
 import { AxisService } from 'src/shared/axis.service';
 

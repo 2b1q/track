@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TrackList } from '../../shared/track-list.interface';
+import { TrackList } from '../../shared/track.interface';
 import { SAVED_ACTIVITIES } from 'src/shared/tracks';
 
 @Injectable()
