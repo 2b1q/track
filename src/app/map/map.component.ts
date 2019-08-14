@@ -45,6 +45,7 @@ export class MapComponent implements OnInit {
     this.activityDate = this.activity.date;
     this.gpx = this.activity.gpxData;
 
+    // update static track info
     this.mapService.subject.subscribe(value => {
       this.currentLatLng = value;
       const snapshotId = this.route.snapshot.params.id - 1;
@@ -59,7 +60,6 @@ export class MapComponent implements OnInit {
         this.snapshot.totalWeight,
         this.snapshot.axises
       );
-
       console.log(this.data);
       // console.log(this.snapshot);
     });

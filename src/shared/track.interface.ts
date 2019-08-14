@@ -40,7 +40,7 @@ export interface Snapshot {
   timestamp?: string;
   totalWeight: number;
   cargoWeight: number;
-  data?: [SnapshotData];
+  data?: SnapshotData[];
   clientUuid?: string;
   gps: CurrentLatLng;
   // user?: User;
@@ -49,6 +49,18 @@ export interface Snapshot {
 // current position info
 export interface PositionInfo {
   point: IGeoJson;
-  currentSpeed: number;
-  snapshot: Snapshot;
+  timeStamp?: number;
+  timePassed?: number;
+  passedPoints?: number;
+  currentSpeed?: number;
+  passedDistance?: number;
+  snapshot?: Snapshot;
+}
+
+export interface TrackLog {
+  startPoint?: IGeoJson;
+  totalPoints?: number; // total points from GPX track
+  endPoint?: IGeoJson;
+  timeStamp?: number; // epoch in ms
+  points: Array<PositionInfo>;
 }

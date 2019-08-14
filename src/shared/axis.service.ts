@@ -11,7 +11,7 @@ export class AxisService {
   }
 
   getLoads(cargoWeight: number, axises: number): SnapshotData[] {
-    console.log(`call AxisService.getLoads(${cargoWeight}, ${axises})`);
+    // console.log(`call AxisService.getLoads(${cargoWeight}, ${axises})`);
     // tslint:disable-next-line:prefer-const
     const result = [];
     for (let i = 1; i <= axises; i++) {

@@ -4,6 +4,33 @@
     <hr />
     <div id="map"></div>
   </div>
-  <div class="col-md-9">
-  </div>
+
+  <ng-container *ngIf="positionInfo">
+    <div class="col-md-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="row">комментарии</th>
+            <th scope="row">вес груза</th>
+            <th scope="row">общий вес</th>
+            <th scope="row">текущие координаты</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>123</td>
+            <td *ngIf="positionInfo.snapshot.cargoWeight as value">{{ value }} кг</td>
+            <td *ngIf="positionInfo.snapshot.totalWeight as value">{{ value }} кг</td>
+            <td *ngIf="positionInfo.point.geometry.coordinates as value">{{ value }} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <ul>
+        <li *ngFor="let axis of positionInfo.snapshot.data">нагрузка на ось {{ axis.axisId }}: {{ axis.weight }} кг</li>
+      </ul>
+    </div>
+  </ng-container>
+
 </div>

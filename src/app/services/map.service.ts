@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 
 import { SAVED_ACTIVITIES, CURRENT_ACTIVITIES } from 'src/shared/tracks';
-import { CurrentLatLng, IGeoJson } from 'src/shared/track.interface';
+import {
+  CurrentLatLng,
+  IGeoJson,
+  PositionInfo,
+  TrackLog
+} from 'src/shared/track.interface';
 
 import * as mapboxgl from 'mapbox-gl';
 
@@ -21,16 +26,23 @@ export class MapService {
   subject: Subject<CurrentLatLng>;
   $track: Observable<any>;
 
-  $pointInfo: Observable<any>;
+  $pointInfo: Subject<PositionInfo>;
+  $trackLog: Subject<TrackLog>;
+
+  private point: PositionInfo;
+  private trackLog: TrackLog;
 
   // map-box properties
   private mapB: mapboxgl.Map;
   private start: IGeoJson;
   private end: IGeoJson;
   private allTrack: IGeoJson;
+  private currentGeoPoint: IGeoJson;
 
   constructor() {
     this.subject = new Subject();
+    this.$pointInfo = new Subject();
+    this.$trackLog = new Subject();
   }
 
   initMapBox(coord: Array<number>, style: string) {
@@ -85,13 +97,20 @@ export class MapService {
       this.mapB.setPitch(30);
       this.$track
         .pipe(delay(3000))
-        .pipe(concatMap(position => of(position).pipe(delay(200))))
+        .pipe(concatMap(position => of(position).pipe(delay(1000))))
         .subscribe(
           currentPosition => {
             this.allTrack.geometry.coordinates.push(currentPosition);
             this.mapB.getSource('trace').setData(this.allTrack);
             this.mapB.panTo(currentPosition);
-            // console.log(currentPosition);
+            // update current geo point
+            this.currentGeoPoint.geometry.coordinates = currentPosition;
+            this.point.passedPoints++;
+            const timeStamp: number = new Date().getTime();
+            this.point.timeStamp = timeStamp;
+            this.point.timePassed = this.trackLog.timeStamp - timeStamp;
+            this.$pointInfo.next(this.point);
+            // console.log('this.point', this.point);
           },
           err => console.error('building track error: ', err),
           () => {
@@ -107,10 +126,38 @@ export class MapService {
       .on('ready', ({ target }) => {
         console.log('GPX ready');
         this.allTrack = target._layers[1].feature;
-        this.allTrack.geometry.coordinates.length = 0; // clear route
         // console.log(this.allTrack);
         this.start = target._layers[3].feature;
         this.end = target._layers[4].feature;
+        this.currentGeoPoint = this.start;
+        this.currentGeoPoint.properties = {}; // cleanup props
+
+        // create initial track point info
+        this.point = {
+          point: this.currentGeoPoint,
+          timeStamp: new Date().getTime(),
+          timePassed: 0,
+          passedPoints: 0,
+          currentSpeed: 0,
+          passedDistance: 0
+        };
+
+        // craete track log
+        this.trackLog = {
+          timeStamp: new Date().getTime(),
+          totalPoints: this.allTrack.geometry.coordinates.length,
+          startPoint: this.start,
+          endPoint: this.end,
+          points: []
+        };
+
+        // add first point to track log
+        this.trackLog.points.push(this.point);
+
+        // start track log
+        this.$trackLog.next(this.trackLog);
+
+        this.allTrack.geometry.coordinates.length = 0; // clear route GPX points
         // create Observable stream
         this.$track = from(
           target._layers[1]._latlngs.map(({ lat, lng }) => [lng, lat])
