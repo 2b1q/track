@@ -8,14 +8,14 @@ import * as StreamActions from '../actions/stream.actions';
 
 const streams: Stream[] = [
   // just pretending that we are loading data from an API in this effect.
-  {
-    title: 'Stream 0 event 1',
-    src: 'http://shumov-ag.fvds.ru:8080/1/stream/0/event-1.m3u8'
-  },
-  {
-    title: 'Stream 0 event 2',
-    src: 'http://shumov-ag.fvds.ru:8080/1/stream/0/event-2.m3u8'
-  },
+  // {
+  //   title: 'Stream 0 event 1',
+  //   src: 'http://shumov-ag.fvds.ru:8080/1/stream/0/event-1.m3u8'
+  // },
+  // {
+  //   title: 'Stream 0 event 2',
+  //   src: 'http://shumov-ag.fvds.ru:8080/1/stream/0/event-2.m3u8'
+  // },
   {
     title: 'Трансляция с МКС',
     src:
