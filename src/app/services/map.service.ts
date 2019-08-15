@@ -97,7 +97,7 @@ export class MapService {
       this.mapB.setPitch(30);
       this.$track
         .pipe(delay(3000))
-        .pipe(concatMap(position => of(position).pipe(delay(1000))))
+        .pipe(concatMap(position => of(position).pipe(delay(3000))))
         .subscribe(
           currentPosition => {
             this.allTrack.geometry.coordinates.push(currentPosition);
@@ -108,7 +108,7 @@ export class MapService {
             this.point.passedPoints++;
             const timeStamp: number = new Date().getTime();
             this.point.timeStamp = timeStamp;
-            this.point.timePassed = this.trackLog.timeStamp - timeStamp;
+            this.point.timePassed = timeStamp - this.trackLog.timeStamp;
             this.$pointInfo.next(this.point);
             // console.log('this.point', this.point);
           },

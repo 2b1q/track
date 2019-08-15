@@ -60,12 +60,20 @@ export class TrackComponent implements OnInit {
       this.positionInfo = point;
       const [lat, lng] = this.positionInfo.point.geometry.coordinates;
       this.positionInfo.point.geometry.coordinates = [lng, lat];
-      // this.currentLatLng = {
-      //   lat: this.positionInfo.point.geometry.coordinates[0],
-      //   lng: this.positionInfo.point.geometry.coordinates[1]
-      // };
-    });
 
-    // setInterval(() => console.log('current data', this.positionInfo), 5000);
+      this.currentLatLng = {
+        lat: lng,
+        lng: lat
+      };
+
+      this.positionInfo.currentSpeed = 0;
+
+      const currentSpeed = this.axis.getCurrentSpeed(
+        this.positionInfo.timeStamp,
+        this.currentLatLng
+      );
+      this.positionInfo.currentSpeed = Math.round(currentSpeed);
+      console.log('current speed: ', currentSpeed);
+    });
   }
 }

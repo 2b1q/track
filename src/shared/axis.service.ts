@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { SnapshotData } from './track.interface';
+import { SnapshotData, CurrentLatLng } from './track.interface';
+import { headingDistanceTo } from 'geolocation-utils';
 
 @Injectable()
 export class AxisService {
   private operator = '-';
+  private prevPosition: CurrentLatLng;
+  private prevTime: number;
+  private prevSpeed: number;
+
   getRandom(min, max) {
     const add = Math.round(Math.random() * (max - min) + min);
     this.operator = this.operator === '-' ? '+' : '-'; // revert operator
@@ -23,15 +28,13 @@ export class AxisService {
       // 1st vehicle axis
       if (i === 1) {
         snapshot.lifted = false; // always false
-        snapshot.weight = Math.round(
-          cargoWeight * 0.4 + this.getRandom(10, 50)
-        ); // 40-43% weight of total cargo
+        snapshot.weight = Math.round(cargoWeight * 0.4 + this.getRandom(3, 10)); // 40-43% weight of total cargo
       }
       // 2nd vehicle axis
       if (i === 2) {
         snapshot.lifted = false; // always false
         snapshot.weight = Math.round(
-          cargoWeight * 0.24 + this.getRandom(5, 40)
+          cargoWeight * 0.24 + this.getRandom(5, 10)
         ); // 20-24% weight of total cargo
       }
       if (axises === 5) {
@@ -39,21 +42,21 @@ export class AxisService {
         if (i === 3) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.12 + this.getRandom(10, 80)
+            cargoWeight * 0.12 + this.getRandom(3, 10)
           ); // 10-12% weight of total cargo
         }
         // 2nd trailer axis
         if (i === 4) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.13 + this.getRandom(10, 40)
+            cargoWeight * 0.13 + this.getRandom(3, 12)
           ); // 12-12.5% weight of total cargo
         }
         // 3d trailer axis
         if (i === 5) {
           snapshot.lifted = false; // maight be true
           snapshot.weight = Math.round(
-            cargoWeight * 0.11 + this.getRandom(30, 60)
+            cargoWeight * 0.11 + this.getRandom(10, 15)
           ); // 10.7% weight of total cargo
         }
       }
@@ -76,5 +79,56 @@ export class AxisService {
       result.push(snapshot);
     }
     return result;
+  }
+
+  /**
+   *
+   * @returns km's passed per one hour
+   */
+  getCurrentSpeed(currentTime: number, position: CurrentLatLng): number {
+    if (
+      this.prevPosition &&
+      this.prevPosition.lat === position.lat &&
+      this.prevPosition.lng === position.lng
+    ) {
+      return 0;
+    }
+
+    if (!this.prevPosition) {
+      this.prevPosition = position;
+      this.prevTime = currentTime;
+      this.prevSpeed = 0;
+      return 0;
+    }
+    const timePassed = currentTime - this.prevTime;
+    const secPassed = Math.round(timePassed / 1000);
+    // const minPassed = secPassed / 60;
+
+    console.log('secPassed', secPassed);
+    // console.log('minPassed', minPassed);
+
+    const location1 = {
+      lat: this.prevPosition.lat,
+      lon: this.prevPosition.lng
+    };
+    const location2 = { lat: position.lat, lon: position.lng };
+    const { distance: metersPassed } = headingDistanceTo(location1, location2);
+
+    const metersPerSec = metersPassed / secPassed;
+
+    const kmPerHour = ((metersPerSec * 60) / 1000) * 60;
+    // console.log('kmPerHour', kmPerHour);
+
+    let avg = 0;
+    if (this.prevSpeed !== kmPerHour) {
+      avg = (this.prevSpeed + kmPerHour) / 2;
+    }
+
+    // console.log('AVG kmPerHour', avg);
+
+    this.prevPosition = position;
+    this.prevTime = currentTime;
+    this.prevSpeed = kmPerHour;
+    return avg > 0 ? avg : kmPerHour;
   }
 }

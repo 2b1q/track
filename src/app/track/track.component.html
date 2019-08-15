@@ -10,7 +10,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="row">комментарии</th>
+            <th *ngIf="positionInfo.currentSpeed" scope="row">текущая скорость</th>
             <th scope="row">вес груза</th>
             <th scope="row">общий вес</th>
             <th scope="row">текущие координаты</th>
@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>123</td>
+            <td *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</td>
             <td *ngIf="positionInfo.snapshot.cargoWeight as value">{{ value }} кг</td>
             <td *ngIf="positionInfo.snapshot.totalWeight as value">{{ value }} кг</td>
             <td *ngIf="positionInfo.point.geometry.coordinates as value">{{ value }} </td>
