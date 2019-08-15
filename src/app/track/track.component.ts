@@ -20,6 +20,8 @@ export class TrackComponent implements OnInit {
   activity: any;
   gpx: any;
   trackLog: TrackLog;
+  startPoint: CurrentLatLng;
+  metersPassed: number;
 
   // currentPositionInfo
   snapshot: Snapshot;
@@ -48,9 +50,17 @@ export class TrackComponent implements OnInit {
       console.log('create track', track);
       this.trackLog = track;
       this.snapshot = SAVED_SNAPSHOTS[3];
+      const [
+        startLng,
+        startLat
+      ] = this.trackLog.startPoint.geometry.coordinates;
+      this.startPoint = {
+        lat: startLat,
+        lng: startLng
+      };
     });
     this.mapService.$pointInfo.subscribe(point => {
-      // console.log('new point', point);
+      // update dynamic point info
       point.snapshot = this.snapshot;
       point.snapshot.data = this.axis.getLoads(
         this.snapshot.cargoWeight,
@@ -61,19 +71,30 @@ export class TrackComponent implements OnInit {
       const [lat, lng] = this.positionInfo.point.geometry.coordinates;
       this.positionInfo.point.geometry.coordinates = [lng, lat];
 
+      // revert lat <> lng \0/
       this.currentLatLng = {
         lat: lng,
         lng: lat
       };
 
+      // calculate current speed
       this.positionInfo.currentSpeed = 0;
-
       const currentSpeed = this.axis.getCurrentSpeed(
         this.positionInfo.timeStamp,
         this.currentLatLng
       );
       this.positionInfo.currentSpeed = Math.round(currentSpeed);
-      console.log('current speed: ', currentSpeed);
+
+      // calculate passed distance
+      this.metersPassed = this.axis.getDistance(
+        this.startPoint,
+        this.currentLatLng
+      );
+
+      this.positionInfo.passedDistance = Math.round(this.metersPassed / 1000);
+      console.log('current moment speed: ', currentSpeed);
+      console.log('current AVG speed: ', this.positionInfo.currentSpeed);
+      console.log('meters passed ', this.metersPassed);
     });
   }
 }

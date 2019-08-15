@@ -14,6 +14,8 @@
             <th scope="row">вес груза</th>
             <th scope="row">общий вес</th>
             <th scope="row">текущие координаты</th>
+            <th *ngIf="positionInfo.passedDistance" scope="row">пройденная дистанция (км)</th>
+            <th *ngIf="metersPassed" scope="row">пройденная дистанция (метров)</th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +24,8 @@
             <td *ngIf="positionInfo.snapshot.cargoWeight as value">{{ value }} кг</td>
             <td *ngIf="positionInfo.snapshot.totalWeight as value">{{ value }} кг</td>
             <td *ngIf="positionInfo.point.geometry.coordinates as value">{{ value }} </td>
+            <td *ngIf="positionInfo.passedDistance as value">{{ value }} </td>
+            <td *ngIf="metersPassed as value">{{ value }} </td>
           </tr>
         </tbody>
       </table>

@@ -15,6 +15,8 @@ import { Subject, from, Observable, of } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
 
 const apiToken = environment.api_token;
+const DALAY_RENDERING = 2500;
+
 declare var omnivore: any;
 declare var L: any;
 
@@ -97,7 +99,7 @@ export class MapService {
       this.mapB.setPitch(30);
       this.$track
         .pipe(delay(3000))
-        .pipe(concatMap(position => of(position).pipe(delay(3000))))
+        .pipe(concatMap(position => of(position).pipe(delay(DALAY_RENDERING))))
         .subscribe(
           currentPosition => {
             this.allTrack.geometry.coordinates.push(currentPosition);

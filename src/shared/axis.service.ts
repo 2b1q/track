@@ -104,7 +104,7 @@ export class AxisService {
     const secPassed = Math.round(timePassed / 1000);
     // const minPassed = secPassed / 60;
 
-    console.log('secPassed', secPassed);
+    console.log('secPassed from previous point to current', secPassed);
     // console.log('minPassed', minPassed);
 
     const location1 = {
@@ -130,5 +130,22 @@ export class AxisService {
     this.prevTime = currentTime;
     this.prevSpeed = kmPerHour;
     return avg > 0 ? avg : kmPerHour;
+  }
+
+  /**
+   *
+   * @param startPositon start point coordinates
+   * @param currentPosition current position coordinates
+   * @returns km passed (number)
+   */
+  getDistance(
+    startPositon: CurrentLatLng,
+    currentPosition: CurrentLatLng
+  ): number {
+    const { distance } = headingDistanceTo(
+      { lat: startPositon.lat, lon: startPositon.lng },
+      { lat: currentPosition.lat, lon: currentPosition.lng }
+    );
+    return Math.round(distance);
   }
 }
