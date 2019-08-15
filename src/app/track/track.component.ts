@@ -91,10 +91,11 @@ export class TrackComponent implements OnInit {
         this.currentLatLng
       );
 
-      this.positionInfo.passedDistance = this.metersPassed / 1000;
+      this.positionInfo.passedDistance = Math.floor(this.metersPassed / 1000);
       console.log('current moment speed: ', currentSpeed);
       console.log('current AVG speed: ', this.positionInfo.currentSpeed);
       console.log('meters passed ', this.metersPassed);
+      console.log('km passed ', this.positionInfo.passedDistance);
     });
   }
 }
