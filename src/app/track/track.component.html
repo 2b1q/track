@@ -10,9 +10,10 @@
       <table class="table">
         <thead>
           <tr>
+            <th *ngIf="totalWeight" scope="row">общий вес</th>
+            <th *ngIf="vehicleWeight" scope="row">вес машины</th>
+            <th *ngIf="cargoWeight" scope="row">вес груза</th>
             <th *ngIf="positionInfo.currentSpeed" scope="row">текущая скорость</th>
-            <th scope="row">вес груза</th>
-            <th scope="row">общий вес</th>
             <th scope="row">текущие координаты</th>
             <th *ngIf="positionInfo.passedDistance" scope="row">пройденная дистанция (км)</th>
             <th *ngIf="metersPassed" scope="row">пройденная дистанция (метров)</th>
@@ -20,10 +21,11 @@
         </thead>
         <tbody>
           <tr>
+            <td *ngIf="totalWeight as value">{{ value }} кг</td>
+            <td *ngIf="vehicleWeight as value">{{ value }} кг</td>
+            <td *ngIf="cargoWeight as value">{{ value }} кг</td>
             <td *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</td>
-            <td *ngIf="positionInfo.snapshot.cargoWeight as value">{{ value }} кг</td>
-            <td *ngIf="positionInfo.snapshot.totalWeight as value">{{ value }} кг</td>
-            <td *ngIf="positionInfo.point.geometry.coordinates as value">{{ value }} </td>
+            <td *ngIf="currentLatLng as value">{{ value.lat }}<br>{{ value.lng }}</td>
             <td *ngIf="positionInfo.passedDistance as value">{{ value }} </td>
             <td *ngIf="metersPassed as value">{{ value }} </td>
           </tr>

@@ -17,12 +17,14 @@ export interface IGeoJson {
 }
 
 export interface TrackList {
+  snapshotId?: number;
   id: number;
   name: string;
   date: Date;
   comments?: string;
   distance?: number;
   gpxData: string;
+  startPoint?: number[];
 }
 
 export interface SnapshotData {
@@ -31,15 +33,26 @@ export interface SnapshotData {
   axisId: number;
 }
 
+export interface AxisLoads {
+  a1?: number;
+  a2?: number;
+  a3?: number;
+  a4?: number;
+  a5?: number;
+}
+
 export interface Snapshot {
   id: number;
+  timestamp?: string;
   vehicleId: string;
   vehicleAxises: number;
   trailerAxises: number;
   axises: number;
-  timestamp?: string;
-  totalWeight: number;
-  cargoWeight: number;
+  emptyLoads?: AxisLoads;
+  notEmptyLoads?: AxisLoads;
+  vehicleEmptyWeight?: number;
+  totalWeight?: number;
+  cargoWeight?: number;
   data?: SnapshotData[];
   clientUuid?: string;
   gps: CurrentLatLng;

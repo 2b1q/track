@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SnapshotData, CurrentLatLng } from './track.interface';
+import { SnapshotData, CurrentLatLng, AxisLoads } from './track.interface';
 import { headingDistanceTo } from 'geolocation-utils';
 
 @Injectable()
@@ -81,6 +81,48 @@ export class AxisService {
     return result;
   }
 
+  getLoadsFromCurrentWeight(currentLoads: AxisLoads): SnapshotData[] {
+    const axises = Object.keys(currentLoads).length;
+    const result = [];
+
+    for (let i = 1; i <= axises; i++) {
+      const snapshot: SnapshotData = {
+        axisId: i,
+        lifted: false,
+        weight: 0
+      };
+      // 1st vehicle axis
+      if (i === 1) {
+        snapshot.lifted = false; // always false
+        snapshot.weight = Math.round(currentLoads.a1 + this.getRandom(1, 7));
+      }
+      // 2nd vehicle axis
+      if (i === 2) {
+        snapshot.lifted = false; // always false
+        snapshot.weight = Math.round(currentLoads.a2 + this.getRandom(1, 8));
+      }
+      if (axises === 5) {
+        // 1st trailer axis
+        if (i === 3) {
+          snapshot.lifted = false; // maight be true
+          snapshot.weight = Math.round(currentLoads.a3 + this.getRandom(3, 5));
+        }
+        // 2nd trailer axis
+        if (i === 4) {
+          snapshot.lifted = false; // maight be true
+          snapshot.weight = Math.round(currentLoads.a4 + this.getRandom(3, 6));
+        }
+        // 3d trailer axis
+        if (i === 5) {
+          snapshot.lifted = false; // maight be true
+          snapshot.weight = Math.round(currentLoads.a5 + this.getRandom(2, 8));
+        }
+      }
+      result.push(snapshot);
+    }
+    return result;
+  }
+
   /**
    *
    * @returns km's passed per one hour
@@ -104,7 +146,7 @@ export class AxisService {
     const secPassed = Math.round(timePassed / 1000);
     // const minPassed = secPassed / 60;
 
-    console.log('secPassed from previous point to current', secPassed);
+    // console.log('secPassed from previous point to current', secPassed);
     // console.log('minPassed', minPassed);
 
     const location1 = {

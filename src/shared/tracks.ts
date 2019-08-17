@@ -33,7 +33,17 @@ export const CURRENT_ACTIVITIES: TrackList[] = [
     name: 'Москва - Воронеж',
     date: new Date(),
     gpxData: '../../assets/gpx/4r.gpx',
-    distance: 524
+    distance: 524,
+    startPoint: [37.618423, 55.751244]
+  },
+  {
+    id: 2,
+    snapshotId: 5,
+    name: 'Домодедово МЕТАЛЛ-ЭНЕРГИЯ - Воронеж АО ТЖБИ-4',
+    date: new Date(),
+    gpxData: '../../assets/gpx/5r.gpx',
+    distance: 524,
+    startPoint: [55.39259, 37.82463]
   }
 ];
 
@@ -86,6 +96,34 @@ export const SAVED_SNAPSHOTS: Snapshot[] = [
     trailerAxises: 3,
     totalWeight: 33400,
     cargoWeight: 18900,
+    gps: {
+      lat: 0.0,
+      lng: 0.0
+    }
+  },
+  {
+    id: 5,
+    vehicleId: 'e253fc8b-fe63-4620-b4a9-af1b37399d15',
+    axises: 5,
+    vehicleAxises: 2,
+    trailerAxises: 3,
+    totalWeight: 34010,
+    cargoWeight: 19810,
+    vehicleEmptyWeight: 14200,
+    emptyLoads: {
+      a1: 5360,
+      a2: 3900,
+      a3: 1680,
+      a4: 1560,
+      a5: 1700
+    },
+    notEmptyLoads: {
+      a1: 6200,
+      a2: 8900,
+      a3: 6320,
+      a4: 6150,
+      a5: 6400
+    },
     gps: {
       lat: 0.0,
       lng: 0.0

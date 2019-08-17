@@ -15,7 +15,8 @@ import { Subject, from, Observable, of } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
 
 const apiToken = environment.api_token;
-const DALAY_RENDERING = 2500;
+const DALAY_RENDERING = 200;
+// const delayFor20Seconds = () => timer(20000);
 
 declare var omnivore: any;
 declare var L: any;
@@ -65,13 +66,13 @@ export class MapService {
 
   getCurrentTrack(id: number) {
     // tslint:disable-next-line:triple-equals
-    return CURRENT_ACTIVITIES.filter(track => track.id == id);
+    return CURRENT_ACTIVITIES.filter(track => track.id == id).pop();
   }
 
   // plot current track
-  plotCurrentTrack(id: number) {
+  plotCurrentTrack(id: number, startPoint: number[]) {
     this.initMapBox(
-      [37.618423, 55.751244],
+      startPoint,
       'mapbox://styles/mapbox/outdoors-v9'
       // 'mapbox://styles/mapbox/satellite-v9'
     );
@@ -98,7 +99,7 @@ export class MapService {
       this.mapB.jumpTo({ center: this.start.geometry.coordinates, zoom: 14 });
       this.mapB.setPitch(30);
       this.$track
-        .pipe(delay(3000))
+        .pipe(delay(2000))
         .pipe(concatMap(position => of(position).pipe(delay(DALAY_RENDERING))))
         .subscribe(
           currentPosition => {
