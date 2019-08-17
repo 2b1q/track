@@ -25,6 +25,7 @@
     "@tmcw/togeojson": "^3.0.1",
     "bootstrap": "^4.3.1",
     "geolocation-utils": "^1.2.2",
+    "hls": "0.0.1",
     "hls.js": "^0.12.4",
     "leaflet": "^1.5.1",
     "leaflet-omnivore": "^0.3.4",
