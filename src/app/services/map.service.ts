@@ -15,7 +15,7 @@ import { Subject, from, Observable, of } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
 
 const apiToken = environment.api_token;
-const DALAY_RENDERING = 200;
+const DALAY_RENDERING = 2500;
 // const delayFor20Seconds = () => timer(20000);
 
 declare var omnivore: any;
