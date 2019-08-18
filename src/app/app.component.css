@@ -7,6 +7,10 @@
   padding: 22px 16px;
 }
 
+.container {
+  padding: 22px 10px;
+}
+
 .navbar-custom {
   margin-top: 10px;
   padding-bottom: 12px;
