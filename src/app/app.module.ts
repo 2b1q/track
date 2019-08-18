@@ -15,13 +15,15 @@ import { appRoutes } from 'src/routes';
 import { MapService } from './services/map.service';
 import { TrackService } from './services/track.service';
 import { AxisService } from 'src/shared/axis.service';
+import { VideoJSComponent } from './video/video.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     TrackListComponent,
-    TrackComponent
+    TrackComponent,
+    VideoJSComponent
   ],
   imports: [
     BrowserModule,

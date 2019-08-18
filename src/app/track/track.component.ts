@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MapService } from '../services/map.service';
 import {
@@ -20,6 +26,8 @@ declare var Hls;
   styleUrls: ['./track.component.css']
 })
 export class TrackComponent implements OnInit {
+  // @ViewChild('video', { static: false }) divVideo: ElementRef;
+
   activity: any;
   gpx: any;
   trackLog: TrackLog;
@@ -50,20 +58,23 @@ export class TrackComponent implements OnInit {
     return Math.round(Math.random() * (max - min) + min);
   }
 
-  ngOnInit() {
-    // const video = document.getElementById('video');
-    // if (Hls.isSupported()) {
-    //   const hls = new Hls();
-    //   hls.loadSource(
-    //     'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8'
-    //   );
-    //   hls.attachMedia(video);
-    //   hls.on(Hls.Events.MANIFEST_PARSED, function() {
-    //     video.play();
-    //   });
-    // }
+  // ngAfterViewInit(): void {
+  //   if (Hls.isSupported()) {
+  //     const hls = new Hls();
+  //     // hls.loadSource('http://shumov-ag.fvds.ru/1/stream/0/live.m3u8');
+  //     hls.loadSource(
+  //       'http://iphone-streaming.ustream.tv/uhls/17074538/streams/live/iphone/playlist.m3u8'
+  //     );
+  //     hls.attachMedia(this.divVideo);
+  //     hls.on(Hls.Events.MANIFEST_PARSED, function() {
+  //       this.divVideo.play();
+  //     });
+  //   }
+  // }
 
-    const { id: trackId } = this.route.snapshot.params;
+  ngOnInit() {
+    // const { id: trackId } = this.route.snapshot.params;
+    const trackId = 2;
     this.activity = this.mapService.getCurrentTrack(trackId);
     const { snapshotId, startPoint, gpxData } = this.activity;
     // set start point positon

@@ -32,7 +32,8 @@
             "scripts": [
               "./node_modules/leaflet/dist/leaflet.js",
               "./node_modules/leaflet-omnivore/leaflet-omnivore.min.js",
-              "./node_modules/hls.js/dist/hls.min.js"
+              "./node_modules/video.js/dist/video.min.js",
+              "./node_modules/videojs-dvrseekbar/dist/videojs-dvrseekbar.min.js"
             ]
           },
           "configurations": {
