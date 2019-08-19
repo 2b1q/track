@@ -3,13 +3,13 @@ services:
     wj_trucks_way_ui:
         build:
             context: .
-        command: ng serve --host 0.0.0.0
+        # command: ng serve --host 0.0.0.0
         container_name: wj_trucks_way_ui
         restart: always
         networks:
             - wayjournal-net
         ports:
-            - "4200:4200"
+            - "80:80"
 
 networks:
   wayjournal-net:

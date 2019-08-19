@@ -1,12 +1,14 @@
-FROM node:latest
+FROM node:alpine AS builder
 
-# Create app directory
-WORKDIR /usr/app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json ./
-RUN npm install --quiet
-RUN npm install -g @angular/cli
+COPY . .
 
-# Bundle app source
-COPY . ./
+RUN npm install && \
+  npm run build
+
+FROM nginx:alpine
+
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
+# COPY nginx.conf /etc/nginx/nginx.conf
+# WORKDIR /usr/share/nginx/html
