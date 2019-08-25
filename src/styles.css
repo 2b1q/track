@@ -9,8 +9,8 @@ body {
 }
 
 .layer {
-  background: rgb(100, 185, 196);
-  background: linear-gradient(135deg, rgba(100, 185, 196, 0.2) 0%, rgba(6, 24, 91, 0.8) 100%);
+  /* background: rgb(100, 185, 196); */
+  /* background: linear-gradient(135deg, rgba(100, 185, 196, 0.2) 0%, rgba(6, 24, 91, 0.8) 100%); */
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   min-height: 1000px;
   background-position: center;
@@ -19,5 +19,9 @@ body {
 }
 
 .app-row {
-  background-color: #ffffff;
+  background: rgba(39, 39, 39, 0.3) 100%;
+  padding: 20, 0, 20, 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
