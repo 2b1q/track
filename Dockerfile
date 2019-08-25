@@ -2,7 +2,15 @@ FROM node:alpine AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY ./angular.json .
+COPY ./karma.conf.js .
+COPY ./package.json .
+COPY ./tsconfig.app.json .
+COPY ./tsconfig.json .
+COPY ./tsconfig.spec.json .
+COPY ./tslint.json .
+COPY ./browserslist .
+COPY ./src ./src
 
 RUN npm install && \
   npm run build
