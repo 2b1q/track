@@ -42,7 +42,7 @@
           <tr>
             <td *ngIf="totalWeight as value">{{ value }}</td>
             <!-- <td *ngIf="vehicleWeight as value">{{ value }} кг</td> -->
-            <td *ngIf="cargoWeight">{{ cargoWeight.value }}</td>
+            <td *ngIf="cargoWeight as value">{{ value }}</td>
             <td *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</td>
             <td *ngIf="positionInfo.passedDistance as value">{{ value }}</td>
             <!-- <td *ngIf="metersPassed as value">{{ value }}</td> -->

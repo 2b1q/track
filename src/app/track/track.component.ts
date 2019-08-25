@@ -239,7 +239,10 @@ export class TrackComponent implements OnInit {
         .map(({ weight }) => weight)
         .reduce((acc, cv) => acc + cv);
 
-      this.cargoWeight = this.totalWeight - this.snapshot.vehicleEmptyWeight;
+      const cargoWeight = this.totalWeight - this.snapshot.vehicleEmptyWeight;
+      if (cargoWeight >= 50) {
+        this.cargoWeight = cargoWeight;
+      }
 
       // calculate current speed
       this.positionInfo.currentSpeed = 0;
