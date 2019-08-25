@@ -11,6 +11,16 @@
 
   <ng-container *ngIf="positionInfo">
     <div class="col-md-12">
+
+      <div *ngIf="panToToggle; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <button type="button" class="btn btn-success" (click)="togglePanTo()">Отключить отслеживание</button>
+      </ng-template>
+      <ng-template #elseBlock>
+        <button type="button" class="btn btn-secondary" (click)="togglePanTo()">Включить отслеживание</button>
+      </ng-template>
+    </div>
+    <div class="col-md-12">
       <table class="table table-dark">
         <thead>
           <tr>

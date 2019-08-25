@@ -42,10 +42,22 @@ export class MapService {
   private allTrack: IGeoJson;
   private currentGeoPoint: IGeoJson;
 
+  // panTo switcher
+  private panTo = true;
+
   constructor() {
     this.subject = new Subject();
     this.$pointInfo = new Subject();
     this.$trackLog = new Subject();
+  }
+
+  togglePanTo(): boolean {
+    this.panTo = !this.panTo;
+    return this.panTo;
+  }
+
+  getPanToState(): boolean {
+    return this.panTo;
   }
 
   initMapBox(coord: Array<number>, style: string) {
@@ -98,6 +110,7 @@ export class MapService {
 
       this.mapB.jumpTo({ center: this.start.geometry.coordinates, zoom: 14 });
       this.mapB.setPitch(30);
+
       this.$track
         .pipe(delay(2000))
         .pipe(concatMap(position => of(position).pipe(delay(DALAY_RENDERING))))
@@ -105,7 +118,9 @@ export class MapService {
           currentPosition => {
             this.allTrack.geometry.coordinates.push(currentPosition);
             this.mapB.getSource('trace').setData(this.allTrack);
-            this.mapB.panTo(currentPosition);
+            if (this.panTo) {
+              this.mapB.panTo(currentPosition);
+            }
             // update current geo point
             this.currentGeoPoint.geometry.coordinates = currentPosition;
             this.point.passedPoints++;

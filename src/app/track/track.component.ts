@@ -48,6 +48,8 @@ export class TrackComponent implements OnInit {
   isLoading = false;
   currentLoads: AxisLoads;
 
+  panToToggle: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
@@ -72,7 +74,13 @@ export class TrackComponent implements OnInit {
   //   }
   // }
 
+  togglePanTo() {
+    this.panToToggle = this.mapService.togglePanTo();
+  }
+
   ngOnInit() {
+    this.panToToggle = this.mapService.getPanToState();
+
     // const { id: trackId } = this.route.snapshot.params;
     const trackId = 2;
     this.activity = this.mapService.getCurrentTrack(trackId);
