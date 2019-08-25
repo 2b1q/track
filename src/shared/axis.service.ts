@@ -4,14 +4,14 @@ import { headingDistanceTo } from 'geolocation-utils';
 
 @Injectable()
 export class AxisService {
-  private operator = '-';
+  private operator = '+';
   private prevPosition: CurrentLatLng;
   private prevTime: number;
   private prevSpeed: number;
 
   getRandom(min, max) {
     const add = Math.round(Math.random() * (max - min) + min);
-    this.operator = this.operator === '-' ? '+' : '-'; // revert operator
+    // this.operator = this.operator === '-' ? '+' : '-'; // revert operator
     return parseInt(`${this.operator}${add}`, 10);
   }
 
@@ -94,28 +94,28 @@ export class AxisService {
       // 1st vehicle axis
       if (i === 1) {
         snapshot.lifted = false; // always false
-        snapshot.weight = Math.round(currentLoads.a1 + this.getRandom(1, 7));
+        snapshot.weight = Math.round(currentLoads.a1 + this.getRandom(0, 3));
       }
       // 2nd vehicle axis
       if (i === 2) {
         snapshot.lifted = false; // always false
-        snapshot.weight = Math.round(currentLoads.a2 + this.getRandom(1, 8));
+        snapshot.weight = Math.round(currentLoads.a2 + this.getRandom(0, 4));
       }
       if (axises === 5) {
         // 1st trailer axis
         if (i === 3) {
           snapshot.lifted = false; // maight be true
-          snapshot.weight = Math.round(currentLoads.a3 + this.getRandom(3, 5));
+          snapshot.weight = Math.round(currentLoads.a3 + this.getRandom(0, 5));
         }
         // 2nd trailer axis
         if (i === 4) {
           snapshot.lifted = false; // maight be true
-          snapshot.weight = Math.round(currentLoads.a4 + this.getRandom(3, 6));
+          snapshot.weight = Math.round(currentLoads.a4 + this.getRandom(0, 4));
         }
         // 3d trailer axis
         if (i === 5) {
           snapshot.lifted = false; // maight be true
-          snapshot.weight = Math.round(currentLoads.a5 + this.getRandom(2, 8));
+          snapshot.weight = Math.round(currentLoads.a5 + this.getRandom(0, 5));
         }
       }
       result.push(snapshot);

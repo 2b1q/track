@@ -48,7 +48,9 @@ export class TrackComponent implements OnInit {
   isLoading = false;
   currentLoads: AxisLoads;
 
-  panToToggle: boolean;
+  // toggles
+  private panToToggle: boolean;
+  private axelToggle = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +78,10 @@ export class TrackComponent implements OnInit {
 
   togglePanTo() {
     this.panToToggle = this.mapService.togglePanTo();
+  }
+
+  toggleLoads() {
+    this.axelToggle = !this.axelToggle;
   }
 
   ngOnInit() {

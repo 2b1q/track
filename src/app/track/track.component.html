@@ -3,64 +3,63 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
 
 <div class="app-row">
-  <div class="col-md-12">
-    <h3 class="heading">{{ activity.name }}</h3>
-    <!-- <hr /> -->
+  <div class="col-md-12" id="heading">
+    <!-- <h3 class="heading">{{ activity.name }}</h3> -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{ activity.name }}</li>
+      </ol>
+    </nav>
     <div id="map"></div>
   </div>
 
   <ng-container *ngIf="positionInfo">
-    <div class="col-md-12">
-
-      <div *ngIf="panToToggle; then thenBlock else elseBlock"></div>
-      <ng-template #thenBlock>
-        <button type="button" class="btn btn-success" (click)="togglePanTo()">Отключить отслеживание</button>
-      </ng-template>
-      <ng-template #elseBlock>
-        <button type="button" class="btn btn-secondary" (click)="togglePanTo()">Включить отслеживание</button>
-      </ng-template>
+    <div class="container">
+      <div class="row">
+        <!-- toggle tracking -->
+        <div *ngIf="panToToggle; then trackOn else trackOff"></div>
+        <!-- toggle axel Loads -->
+        <div *ngIf="axelToggle; then axelOn else axelOff"></div>
+        <div class="col-6"></div>
+      </div>
     </div>
     <div class="col-md-12">
       <table class="table table-dark">
         <thead>
           <tr>
-            <th *ngIf="totalWeight" scope="row">общий вес</th>
-            <th *ngIf="vehicleWeight" scope="row">вес машины</th>
-            <th *ngIf="cargoWeight" scope="row">вес груза</th>
-            <th *ngIf="positionInfo.currentSpeed" scope="row">
+            <th scope="row">общий вес (кг)</th>
+            <!-- <th scope="row">вес машины</th> -->
+            <th *ngIf="cargoWeight" scope="row">вес груза (кг)</th>
+            <th scope="row">
               текущая скорость
             </th>
-            <th scope="row">текущие координаты</th>
-            <th *ngIf="positionInfo.passedDistance" scope="row">
+            <th scope="row">
               пройденная дистанция (км)
-            </th>
-            <th *ngIf="metersPassed" scope="row">
-              пройденная дистанция (метров)
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td *ngIf="totalWeight as value">{{ value }} кг</td>
-            <td *ngIf="vehicleWeight as value">{{ value }} кг</td>
-            <td *ngIf="cargoWeight as value">{{ value }} кг</td>
+            <td *ngIf="totalWeight as value">{{ value }}</td>
+            <!-- <td *ngIf="vehicleWeight as value">{{ value }} кг</td> -->
+            <td *ngIf="cargoWeight">{{ cargoWeight.value }}</td>
             <td *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</td>
-            <td *ngIf="currentLatLng as value">
-              {{ value.lat }}<br />{{ value.lng }}
-            </td>
             <td *ngIf="positionInfo.passedDistance as value">{{ value }}</td>
-            <td *ngIf="metersPassed as value">{{ value }}</td>
+            <!-- <td *ngIf="metersPassed as value">{{ value }}</td> -->
+            <!-- <td *ngIf="currentLatLng as value">
+              {{ value.lat }}<br />{{ value.lng }}
+            </td> -->
           </tr>
           <tr>
             <td colspan="3">
-              <ul>
+              <sxm-video></sxm-video>
+            </td>
+            <td colspan="1">
+              <ul *ngIf="axelToggle">
                 <li *ngFor="let axis of positionInfo.snapshot.data">
-                  нагрузка на ось {{ axis.axisId }}: {{ axis.weight }} кг
+                  ось {{ axis.axisId }}: {{ axis.weight }} кг
                 </li>
               </ul>
-            </td>
-            <td colspan="4">
-              <sxm-video> </sxm-video>
             </td>
           </tr>
         </tbody>
@@ -68,3 +67,29 @@
     </div>
   </ng-container>
 </div>
+
+
+<ng-template #trackOn>
+  <div class="col">
+    <button type="button" class="btn btn-outline-success btn-block" (click)="togglePanTo()">Отключить
+      трэкинг</button>
+  </div>
+</ng-template>
+<ng-template #trackOff>
+  <div class="col">
+    <button type="button" class="btn btn-dark btn-block" (click)="togglePanTo()">Включить трэкинг</button>
+  </div>
+</ng-template>
+
+<ng-template #axelOn>
+  <div class="col">
+    <button type="button" class="btn btn-outline-success btn-block" (click)="toggleLoads()">Отключить вывод
+      нагрузки</button>
+  </div>
+</ng-template>
+<ng-template #axelOff>
+  <div class="col">
+    <button type="button" class="btn btn-dark btn-block" (click)="toggleLoads()">Включить вывод
+      нагрузки</button>
+  </div>
+</ng-template>
