@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 
 import { SAVED_ACTIVITIES, CURRENT_ACTIVITIES } from 'src/shared/tracks';
-import {
-  CurrentLatLng,
-  IGeoJson,
-  PositionInfo,
-  TrackLog
-} from 'src/shared/track.interface';
+import { CurrentLatLng, IGeoJson, PositionInfo, TrackLog } from 'src/shared/track.interface';
 
 import * as mapboxgl from 'mapbox-gl';
 
@@ -36,7 +31,7 @@ export class MapService {
   private trackLog: TrackLog;
 
   // map-box properties
-  private mapB: mapboxgl.Map;
+  mapB: mapboxgl.Map;
   private start: IGeoJson;
   private end: IGeoJson;
   private allTrack: IGeoJson;
@@ -90,26 +85,26 @@ export class MapService {
     );
     this.mapB.on('load', () => {
       console.log('on load');
-      console.log('this.start', this.start);
-      console.log('this.end', this.end);
-      this.mapB.addSource('trace', {
-        type: 'geojson',
-        data: this.allTrack
-      });
-
-      this.mapB.addLayer({
-        id: 'trace',
-        type: 'line',
-        source: 'trace',
-        paint: {
-          'line-color': 'red',
-          'line-opacity': 0.75,
-          'line-width': 5
-        }
-      });
-
-      this.mapB.jumpTo({ center: this.start.geometry.coordinates, zoom: 14 });
-      this.mapB.setPitch(30);
+      // console.log('this.start', this.start);
+      // console.log('this.end', this.end);
+      this.mapB
+        .addSource('trace', {
+          type: 'geojson',
+          data: this.allTrack
+        })
+        // add trace layer
+        .addLayer({
+          id: 'trace',
+          type: 'line',
+          source: 'trace',
+          paint: {
+            'line-color': 'red',
+            'line-opacity': 0.75,
+            'line-width': 5
+          }
+        })
+        .jumpTo({ center: this.start.geometry.coordinates, zoom: 14 })
+        .setPitch(30);
 
       this.$track
         .pipe(delay(2000))
@@ -118,6 +113,7 @@ export class MapService {
           currentPosition => {
             this.allTrack.geometry.coordinates.push(currentPosition);
             this.mapB.getSource('trace').setData(this.allTrack);
+            // pan to currentPosition if panTogle is switched
             if (this.panTo) {
               this.mapB.panTo(currentPosition);
             }
@@ -177,9 +173,7 @@ export class MapService {
 
         this.allTrack.geometry.coordinates.length = 0; // clear route GPX points
         // create Observable stream
-        this.$track = from(
-          target._layers[1]._latlngs.map(({ lat, lng }) => [lng, lat])
-        );
+        this.$track = from(target._layers[1]._latlngs.map(({ lat, lng }) => [lng, lat]));
       });
   }
 
@@ -195,26 +189,19 @@ export class MapService {
 
     map.maxZoom = 100;
 
-    L.tileLayer(
-      'https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-      {
-        maxZoom: 18,
-        // id: 'mapbox.dark',
-        id: 'mapbox.streets',
-        accessToken: apiToken
-      }
-    ).addTo(map);
+    L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      maxZoom: 18,
+      // id: 'mapbox.dark',
+      id: 'mapbox.streets',
+      accessToken: apiToken
+    }).addTo(map);
 
     const customLayer = L.geoJson(null, {
       style: myStyle
     });
 
     const gpxLayer = omnivore
-      .gpx(
-        SAVED_ACTIVITIES.slice(0).find(run => run.id === id).gpxData,
-        null,
-        customLayer
-      )
+      .gpx(SAVED_ACTIVITIES.slice(0).find(run => run.id === id).gpxData, null, customLayer)
       .on('ready', () => map.fitBounds(gpxLayer.getBounds()))
       .on('click', e => {
         onMapClick(e);

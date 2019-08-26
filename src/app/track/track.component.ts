@@ -1,22 +1,11 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MapService } from '../services/map.service';
-import {
-  TrackLog,
-  Snapshot,
-  CurrentLatLng,
-  SnapshotData,
-  PositionInfo,
-  AxisLoads
-} from 'src/shared/track.interface';
+import { TrackLog, Snapshot, CurrentLatLng, SnapshotData, PositionInfo, AxisLoads } from 'src/shared/track.interface';
 import { AxisService } from 'src/shared/axis.service';
 import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
+
+import * as mapboxgl from 'mapbox-gl';
 
 declare var Hls;
 
@@ -52,11 +41,7 @@ export class TrackComponent implements OnInit {
   private panToToggle: boolean;
   private axelToggle = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private mapService: MapService,
-    private axis: AxisService
-  ) {}
+  constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {}
 
   addRandom(min, max): number {
     return Math.round(Math.random() * (max - min) + min);
@@ -116,7 +101,6 @@ export class TrackComponent implements OnInit {
       const [lng, lat] = point.point.geometry.coordinates;
       point.snapshot = this.snapshot;
 
-      this.trackLog.points.push(point);
       this.positionInfo = point;
       this.positionInfo.point.geometry.coordinates = [lng, lat];
       this.currentLatLng = { lat, lng };
@@ -131,9 +115,7 @@ export class TrackComponent implements OnInit {
         // wait 10 point before loading
         if (this.loading <= 10) {
           this.isLoading = true;
-          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(
-            this.currentLoads
-          );
+          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(this.currentLoads);
           // total waitiong 210 points
         } else if (this.loading >= 200) {
           // set as loaded
@@ -168,9 +150,7 @@ export class TrackComponent implements OnInit {
           }
 
           // console.log('this.currentLoads', this.currentLoads);
-          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(
-            this.currentLoads
-          );
+          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(this.currentLoads);
         }
       } else if (lat === 51.630542 && lng === 39.25658) {
         this.driveMode = false;
@@ -214,9 +194,7 @@ export class TrackComponent implements OnInit {
 
         // if (this.isLoading) {
         console.log('this.currentLoads', this.currentLoads);
-        point.snapshot.data = this.axis.getLoadsFromCurrentWeight(
-          this.currentLoads
-        );
+        point.snapshot.data = this.axis.getLoadsFromCurrentWeight(this.currentLoads);
         // }
       } else {
         this.driveMode = true;
@@ -224,13 +202,9 @@ export class TrackComponent implements OnInit {
 
       if (this.driveMode) {
         if (this.loaded === true) {
-          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(
-            this.snapshot.notEmptyLoads
-          );
+          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(this.snapshot.notEmptyLoads);
         } else {
-          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(
-            this.snapshot.emptyLoads
-          );
+          point.snapshot.data = this.axis.getLoadsFromCurrentWeight(this.snapshot.emptyLoads);
         }
       }
 
@@ -246,23 +220,61 @@ export class TrackComponent implements OnInit {
 
       // calculate current speed
       this.positionInfo.currentSpeed = 0;
-      const currentSpeed = this.axis.getCurrentSpeed(
-        this.positionInfo.timeStamp,
-        this.currentLatLng
-      );
+      const currentSpeed = this.axis.getCurrentSpeed(this.positionInfo.timeStamp, this.currentLatLng);
       this.positionInfo.currentSpeed = Math.round(currentSpeed);
 
       // calculate passed distance
-      this.metersPassed = this.axis.getDistance(
-        this.startPoint,
-        this.currentLatLng
-      );
+      this.metersPassed = this.axis.getDistance(this.startPoint, this.currentLatLng);
 
       this.positionInfo.passedDistance = Math.floor(this.metersPassed / 1000);
       // console.log('current moment speed: ', currentSpeed);
       // console.log('current AVG speed: ', this.positionInfo.currentSpeed);
       // console.log('meters passed ', this.metersPassed);
       // console.log('km passed ', this.positionInfo.passedDistance);
+      // Log current positionInfo
+      this.trackLog.points.push(this.positionInfo);
     });
+
+    // add map event handlers
+    const map = this.mapService.mapB;
+    map
+      // on layer 'trace' click event handler
+      .on('click', 'trace', e => {
+        let data = this.trackLog.points.find(
+          point =>
+            point.point.geometry.coordinates[0].toFixed(3) === e.lngLat.lng.toFixed(3) &&
+            point.point.geometry.coordinates[1].toFixed(3) === e.lngLat.lat.toFixed(3)
+        );
+        // hard mode GEO point comparer
+        if (!data) {
+          data = this.trackLog.points.find(
+            point =>
+              point.point.geometry.coordinates[0].toFixed(2) === e.lngLat.lng.toFixed(2) &&
+              point.point.geometry.coordinates[1].toFixed(2) === e.lngLat.lat.toFixed(2)
+          );
+        }
+        console.log('position data', data);
+        if (data) {
+          new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(
+              `
+            <br><h6>скорость: <span class="badge badge-dark">${data.currentSpeed} км/ч</span></h6>
+            <h6>осевая нагрузка:</h6>
+            <h6><span class="badge badge-primary">ось 1</span><span class="badge badge-pill badge-success">${data.snapshot.data[0].weight} кг</span></h6>
+            <h6><span class="badge badge-primary">ось 2</span><span class="badge badge-pill badge-success">${data.snapshot.data[1].weight} кг</span></h6>
+            <h6><span class="badge badge-primary">ось 3</span><span class="badge badge-pill badge-success">${data.snapshot.data[2].weight} кг</span></h6>
+            <h6><span class="badge badge-primary">ось 4</span><span class="badge badge-pill badge-success">${data.snapshot.data[3].weight} кг</span></h6>
+            <h6><span class="badge badge-primary">ось 5</span><span class="badge badge-pill badge-success">${data.snapshot.data[4].weight} кг</span></h6>
+
+            `
+            )
+            .addTo(map);
+        }
+      })
+      // Change the cursor to a pointer when the mouse is over the trace layer.
+      .on('mouseenter', 'trace', () => (map.getCanvas().style.cursor = 'pointer'))
+      // Change it back to a pointer when it leaves.
+      .on('mouseleave', 'trace', () => (map.getCanvas().style.cursor = ''));
   }
 }
