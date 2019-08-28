@@ -9,7 +9,7 @@ services:
     networks:
       - wayjournal-net
     ports:
-      - "4200:80"
+      - "80:80"
 
 networks:
   wayjournal-net:
