@@ -17,16 +17,18 @@ services:
     build:
       context: vpn-hls
     container_name: hls-vpn-proxy
-    command: /root/run.sh --cap-add=NET_ADMIN
+    command: /root/run.sh
     devices:
       - "/dev/net/tun:/dev/net/tun"
     depends_on:
       - wj_trucks_way_ui
-    environment:
-      - no_proxy=ENV
-      - ftp_proxy=ENV
-      - http_proxy=ENV
-      - https_proxy=ENV
+    cap_add:
+      - NET_ADMIN
+    # environment:
+    #   - no_proxy=ENV
+    #   - ftp_proxy=ENV
+    #   - http_proxy=ENV
+    #   - https_proxy=ENV
     volumes:
       - vpn-hls/data/vpn/:/usr/vpnserver/
       - vpn-hls/data/nginx/:/etc/nginx/
@@ -36,10 +38,10 @@ services:
       - wayjournal-net
     ports:
       - "81:80"
-      - "8080:8080"
-      - "443:443"
-      - "992:992"
-      - "1194:1194"
+      # - "8080:8080"
+      # - "443:443"
+      # - "992:992"
+      # - "1194:1194"
       - "5555:5555"
 
 networks:
