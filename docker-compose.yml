@@ -22,10 +22,10 @@ services:
       - "/dev/net/tun:/dev/net/tun"
     cap_add:
       - NET_ADMIN
-    volumes:
-      # - ./vpn-hls/data/vpn/:/usr/vpnserver/
-      # - ./vpn-hls/data/nginx/:/etc/nginx/
-      # - ./vpn-hls/data/dhcp/:/etc/dhcp/
+    # volumes:
+    # - ./vpn-hls/data/vpn/:/usr/vpnserver/
+    # - ./vpn-hls/data/nginx/:/etc/nginx/
+    # - ./vpn-hls/data/dhcp/:/etc/dhcp/
     restart: always
     networks:
       - wayjournal-net
