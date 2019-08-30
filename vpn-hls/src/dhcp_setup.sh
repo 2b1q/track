@@ -47,6 +47,11 @@ host my_pi3bp {
   fixed-address 192.168.222.14;
 }
 
+host new_pi3bp {
+  hardware ethernet 5e:48:e6:c7:9d:21;
+  fixed-address 192.168.222.16;
+}
+
 EOF
 
 fi
