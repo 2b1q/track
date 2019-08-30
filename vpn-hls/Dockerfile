@@ -17,7 +17,7 @@ RUN   apt install -y lsb-release
 RUN   apt install -y iproute2
 
 ADD src /root
-# RUN mkdir /usr/vpnserver/
+RUN mkdir /usr/vpnserver/
 # RUN cp /root/vpn_server.config /usr/vpnserver/
 
 RUN   /root/vpn_install.sh
