@@ -17,6 +17,7 @@ RUN   apt install -y curl
 RUN   apt install -y gnupg2
 RUN   apt install -y lsb-release
 COPY  src/nginx_install.sh /root
+COPY  src/vpn_server.config /usr/vpnserver/
 RUN   /root/nginx_install.sh
 RUN   apt install -y iproute2
 COPY  src/dhcp_install.sh /root
@@ -25,13 +26,5 @@ RUN   /root/dhcp_install.sh
 COPY  src/vpn_setup.sh /root
 COPY  src/nginx_setup.sh /root
 COPY  src/dhcp_setup.sh /root
-
-# EXPOSE 80/tcp
-# EXPOSE 8080/tcp
-# EXPOSE 443/tcp
-# EXPOSE 992/tcp
-# EXPOSE 1194/udp
-# EXPOSE 5555/tcp
-
 COPY  src/run.sh /root
 # CMD /root/run.sh
