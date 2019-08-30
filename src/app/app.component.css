@@ -1,3 +1,10 @@
+
+@font-face {
+  font-family: "MuseoSansCyrl";
+  src: url("../assets/fonts/MuseoSansCyrl_300-webfont.woff2") format('woff'),
+  url("../assets/fonts/ofont.ru_Museo_Sans_Cyrl_300.ttf") format("truetype");
+}
+
 .logo {
   color: rgb(106, 52, 122);
   font-size: 2em;
@@ -5,10 +12,6 @@
   font-style: italic;
   /* background-color: #000; */
   padding: 22px 16px;
-}
-
-.container {
-  padding: 22px 10px;
 }
 
 .navbar-custom {
@@ -40,4 +43,113 @@
 .info-container {
   height: 500px;
   background-color: white;
+}
+
+.container-fluid {
+  padding: 0;
+}
+.header_top{
+  box-sizing: border-box;
+  width: 100%;
+  height: 71px;
+  background-color: white;
+  padding-top: 28px;
+}
+.logo2{
+  margin-right: 27px;
+  margin-bottom: 28px;
+}
+.logo_separator{
+  width: 1px;
+  height: 38px;
+  background-color: #e6e9ec;
+}
+.logo_slogan{
+  height: 54px;
+  font-family: MuseoSansCyrl, Arial, sans-serif;
+  font-size: 17px;
+  font-stretch: 100%;
+  padding-left: 18px;
+
+}
+
+nav .nav_left{
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 70%;
+}
+nav .nav_right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30%;
+}
+nav .nav_left li,.nav_right li {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+nav .nav_left a,.nav_right a {
+  color: #d7eafa;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 20px 15px;
+}
+nav .nav_right span {
+  display: inline;
+  border-bottom: 1px dotted;
+  border-bottom-color: rgb(215, 234, 250);
+}
+nav .nav_right span.icon {
+  border: 0 !important;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  background: url("../assets/img/og-sprite.png") 0 0 no-repeat;
+  margin-right: 10px;
+  width: 14px;
+  height: 14px;
+}
+nav .nav_right span.icon.r1{
+  background-position: -45px 0;
+}
+nav .nav_right span.icon.r2{
+  background-position: -60px 0;
+}
+.first_link {
+  padding-left: 0 !important;
+}
+.last_link {
+  padding-right: 0 !important;
+}
+nav .nav_left,.nav_right a:hover{
+  color: white;
+
+}
+
+
+@media screen and (min-width: 900px) {
+  .header_top-container{
+    display: flex;
+    width: 100%;
+    padding-right: 130px;
+    padding-left: 130px;
+
+  }
+  nav.main{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding-right: 130px;
+    padding-left: 130px;
+    background-color: #00aeef;
+    box-shadow: 0 4px 2px -2px gray;
+  }
 }
