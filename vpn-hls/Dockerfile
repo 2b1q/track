@@ -18,7 +18,7 @@ RUN   apt install -y iproute2
 
 ADD src /root
 RUN mkdir /usr/vpnserver/
-# RUN cp /root/vpn_server.config /usr/vpnserver/
+RUN cp /root/vpn_server.config /usr/vpnserver/
 
 RUN   /root/vpn_install.sh
 RUN   /root/nginx_install.sh
