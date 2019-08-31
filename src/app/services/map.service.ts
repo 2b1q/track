@@ -98,7 +98,7 @@ export class MapService {
           type: 'line',
           source: 'trace',
           paint: {
-            'line-color': 'red',
+            'line-color': '#bb0000',
             'line-opacity': 0.75,
             'line-width': 5
           }
