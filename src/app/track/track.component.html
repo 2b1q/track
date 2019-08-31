@@ -32,14 +32,15 @@
 
           <div class="panel_delimiter"></div>
           <h5>Видео из кабины:</h5>
+          <sxm-video></sxm-video>
           <!-- <sxm-videosm></sxm-videosm> -->
 
           <div class="panel_delimiter"></div>
           <h5>Настройки:</h5>
           <span style="font-size: 13px !important; color: #666;">
-            <ng-switchery size="switchery-sm" [ngModel]="panToToggle" (change)="togglePanTo()" name="switchery-check1"
+            <ng-switchery color="switchery-success" size="switchery-sm" [ngModel]="panToToggle" (change)="togglePanTo()" name="switchery-check1"
               onLabel="- мониторинг трекинга"></ng-switchery>
-            <ng-switchery size="switchery-sm" [ngModel]="axelToggle" (change)="toggleLoads()" name="switchery-check2"
+            <ng-switchery color="switchery-success" size="switchery-sm" [ngModel]="axelToggle" (change)="toggleLoads()" name="switchery-check2"
               onLabel="- вывод нагрузки"></ng-switchery>
           </span>
         </ng-container>

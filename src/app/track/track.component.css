@@ -27,19 +27,20 @@
 
 .map_container {
   height: 700px;
-  margin-top: 87px;
+  margin-top: 1px;
+  z-index: 1;
 }
 
 .map_info_panel {
   width: 25%;
   height: 700px;
-  z-index: +1;
+  z-index: 10;
   position: absolute;
-  top: 89px;
+  top: 1px;
   left: 15px;
   background-color: white;
   padding: 15px 10px 10px 20px;
-  box-shadow: -5px 0 5px -5px rgba(68,68,68,0.6);
+  box-shadow: 5px 0 5px -5px rgba(68,68,68,0.6);
 }
 h5{
   color: #444;
