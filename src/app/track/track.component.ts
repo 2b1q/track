@@ -7,7 +7,6 @@ import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
 
 import * as mapboxgl from 'mapbox-gl';
 
-
 declare var Hls;
 
 @Component({
@@ -41,9 +40,11 @@ export class TrackComponent implements OnInit {
 
   // toggles
   private panToToggle: boolean;
-  private axelToggle = true;
+  private axelToggle: boolean;
 
   constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {
+    this.axelToggle = false;
+    this.panToToggle = true;
     this.myInnerHeight = `${window.innerHeight - 300}px !important`;
   }
 
