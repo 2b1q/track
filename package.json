@@ -23,6 +23,7 @@
     "@angular/router": "~8.2.0",
     "@mapbox/togeojson": "^0.16.0",
     "@tmcw/togeojson": "^3.0.1",
+    "angular-switchery-ios": "^2.0.0",
     "bootstrap": "^4.3.1",
     "geolocation-utils": "^1.2.2",
     "leaflet": "^1.5.1",

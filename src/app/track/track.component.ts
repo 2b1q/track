@@ -7,6 +7,7 @@ import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
 
 import * as mapboxgl from 'mapbox-gl';
 
+
 declare var Hls;
 
 @Component({
@@ -18,6 +19,7 @@ export class TrackComponent implements OnInit {
   // @ViewChild('video', { static: false }) divVideo: ElementRef;
 
   activity: any;
+  myInnerHeight: string;
   gpx: any;
   trackLog: TrackLog;
   startPoint: CurrentLatLng;
@@ -41,7 +43,9 @@ export class TrackComponent implements OnInit {
   private panToToggle: boolean;
   private axelToggle = true;
 
-  constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {}
+  constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {
+    this.myInnerHeight = `${window.innerHeight - 300}px !important`;
+  }
 
   addRandom(min, max): number {
     return Math.round(Math.random() * (max - min) + min);
