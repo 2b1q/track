@@ -23,9 +23,10 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      # - ./vpn-hls/data/vpn/:/usr/vpnserver/
+      - ./vpn-hls/data/vpn/:/usr/vpnserver/
       - ./vpn-hls/data/nginx/:/etc/nginx/
       - ./vpn-hls/data/dhcp/:/etc/dhcp/
+      - ./vpn-hls/logs/:/var/log/nginx/
     restart: always
     networks:
       - wayjournal-net
