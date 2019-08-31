@@ -240,6 +240,10 @@ export class TrackComponent implements OnInit {
     map
       // on layer 'trace' click event handler
       .on('click', 'trace', e => {
+        // console.log('this.trackLog.points', this.trackLog.points);
+        console.log('e.lngLat.lng.toFixed(3)', e.lngLat.lng.toFixed(3));
+        console.log('e.lngLat.lat.toFixed(3)', e.lngLat.lat.toFixed(3));
+
         let data = this.trackLog.points.find(
           point =>
             point.point.geometry.coordinates[0].toFixed(3) === e.lngLat.lng.toFixed(3) &&

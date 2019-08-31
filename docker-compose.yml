@@ -26,7 +26,8 @@ services:
       - ./vpn-hls/data/vpn/vpn_server.config:/usr/vpnserver/vpn_server.config
       - ./vpn-hls/data/nginx/:/etc/nginx/
       - ./vpn-hls/data/dhcp/:/etc/dhcp/
-      - ./vpn-hls/logs/:/var/log/nginx/
+      - ./vpn-hls/logs/nginx:/var/log/nginx/
+      - ./vpn-hls/logs/vpn/:/usr/vpnserver/server_log/
     restart: always
     networks:
       - wayjournal-net
