@@ -44,12 +44,12 @@ subnet 192.168.222.0 netmask 255.255.255.0 {
 # set.
 host my_pi3bp {
   hardware ethernet 5e:48:e6:51:5f:6d;
-  fixed-address 192.168.222.14;
+  fixed-address 192.168.222.16;
 }
 
 host new_pi3bp {
   hardware ethernet 5e:48:e6:c7:9d:21;
-  fixed-address 192.168.222.16;
+  fixed-address 192.168.222.14;
 }
 
 EOF
