@@ -15,23 +15,33 @@
         <ng-container *ngIf="positionInfo">
           <div class="panel_delimiter"></div>
           <h5>Характеристики:</h5>
-          <div class="cname">Общий вес (кг):</div><div class="cinfo" *ngIf="totalWeight as value">{{ value }}</div><br>
-          <div class="cname">Вес груза (кг):</div><div class="cinfo" *ngIf="cargoWeight as value">{{ value }}</div><br>
-          <div class="cname">Текущая скорость:</div><div class="cinfo" *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</div><br>
-          <div class="cname">Пройденная дистанция (км):</div><div class="cinfo" *ngIf="positionInfo.passedDistance as value">{{ value }}</div>
-          <div *ngFor="let axis of positionInfo.snapshot.data">
-            <span class="cname">Нагрузка, ось {{ axis.axisId }}:</span><span class="cinfo">{{ axis.weight }} кг</span><br>
-          </div>
+          <div class="cname">Общий вес (кг):</div>
+          <div class="cinfo" *ngIf="totalWeight as value">{{ value }}</div><br>
+          <div class="cname">Вес груза (кг):</div>
+          <div class="cinfo" *ngIf="cargoWeight as value">{{ value }}</div><br>
+          <div class="cname">Текущая скорость:</div>
+          <div class="cinfo" *ngIf="positionInfo.currentSpeed as value">{{ value }} км/ч</div><br>
+          <div class="cname">Пройденная дистанция (км):</div>
+          <div class="cinfo" *ngIf="positionInfo.passedDistance as value">{{ value }}</div>
+          <ng-container *ngIf="axelToggle">
+            <div *ngFor="let axis of positionInfo.snapshot.data">
+              <span class="cname">Нагрузка, ось {{ axis.axisId }}:</span><span class="cinfo">{{ axis.weight }}
+                кг</span><br>
+            </div>
+          </ng-container>
 
           <div class="panel_delimiter"></div>
           <h5>Видео из кабины:</h5>
-            <sxm-videosm></sxm-videosm>
+          <sxm-video></sxm-video>
+          <!-- <sxm-videosm></sxm-videosm> -->
 
           <div class="panel_delimiter"></div>
           <h5>Настройки:</h5>
           <span style="font-size: 13px !important; color: #666;">
-            <ng-switchery size="switchery-sm" [(ngModel)]="panToToggle" (change)="togglePanTo()" name="switchery-check1" onLabel="- мониторинг трекинга"></ng-switchery>
-            <ng-switchery size="switchery-sm" [(ngModel)]="axelToggle" (change)="toggleLoads()" name="switchery-check2" onLabel="- вывод нагрузки"></ng-switchery>
+            <ng-switchery color="switchery-success" size="switchery-sm" [ngModel]="panToToggle" (change)="togglePanTo()" name="switchery-check1"
+              onLabel="- мониторинг трекинга"></ng-switchery>
+            <ng-switchery color="switchery-success" size="switchery-sm" [ngModel]="axelToggle" (change)="toggleLoads()" name="switchery-check2"
+              onLabel="- вывод нагрузки"></ng-switchery>
           </span>
         </ng-container>
       </div>

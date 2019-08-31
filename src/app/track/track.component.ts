@@ -7,7 +7,6 @@ import { SAVED_SNAPSHOTS } from 'src/shared/tracks';
 
 import * as mapboxgl from 'mapbox-gl';
 
-
 declare var Hls;
 
 @Component({
@@ -41,9 +40,11 @@ export class TrackComponent implements OnInit {
 
   // toggles
   private panToToggle: boolean;
-  private axelToggle = true;
+  private axelToggle: boolean;
 
   constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {
+    this.axelToggle = false;
+    this.panToToggle = true;
     this.myInnerHeight = `${window.innerHeight - 300}px !important`;
   }
 
@@ -267,9 +268,9 @@ export class TrackComponent implements OnInit {
             .setLngLat(e.lngLat)
             .setHTML(
               `
-            <br><h6>скорость: <span class="badge badge-dark">${data.currentSpeed} км/ч</span></h6>
-            <h6>осевая нагрузка:</h6>
-            <h6><span class="badge badge-primary">ось 1</span><span class="badge badge-pill badge-success">${data.snapshot.data[0].weight} кг</span></h6>
+            <br><h6 style="font-size:14px;color:#666;">Скорость: <span style="font-size:16px;color:#444;">${data.currentSpeed}</span> км/ч</h6>
+            <h6 style="font-size:14px;color:#666; margin-top: 10px;">Осевая нагрузка:</h6>
+            <h6 style="font-size:14px;color:#666;"> &nbsp;Ось 1: <span style="font-size:16px;color:#444;">${data.snapshot.data[0].weight} кг</span></h6>
             <h6><span class="badge badge-primary">ось 2</span><span class="badge badge-pill badge-success">${data.snapshot.data[1].weight} кг</span></h6>
             <h6><span class="badge badge-primary">ось 3</span><span class="badge badge-pill badge-success">${data.snapshot.data[2].weight} кг</span></h6>
             <h6><span class="badge badge-primary">ось 4</span><span class="badge badge-pill badge-success">${data.snapshot.data[3].weight} кг</span></h6>
