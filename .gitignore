@@ -1,4 +1,6 @@
-# /vpn-hls/data
+/vpn-hls/data/nginx/
+/vpn-hls/data/dhcp/
+/vpn-hls/logs/
 
 # compiled output
 /dist
