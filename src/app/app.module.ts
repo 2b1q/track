@@ -16,6 +16,7 @@ import { MapService } from './services/map.service';
 import { TrackService } from './services/track.service';
 import { AxisService } from 'src/shared/axis.service';
 import { VideoJSComponent } from './video/video.component';
+import { SmallVideoJSComponent } from './video_small/video.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { VideoJSComponent } from './video/video.component';
     MapComponent,
     TrackListComponent,
     TrackComponent,
-    VideoJSComponent
+    VideoJSComponent,
+    SmallVideoJSComponent
   ],
   imports: [
     BrowserModule,

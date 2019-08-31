@@ -1,9 +1,4 @@
 
-@font-face {
-  font-family: "MuseoSansCyrl";
-  src: url("../assets/fonts/MuseoSansCyrl_300-webfont.woff2") format('woff'),
-  url("../assets/fonts/ofont.ru_Museo_Sans_Cyrl_300.ttf") format("truetype");
-}
 
 .logo {
   color: rgb(106, 52, 122);
@@ -150,6 +145,6 @@ nav .nav_left,.nav_right a:hover{
     padding-right: 130px;
     padding-left: 130px;
     background-color: #00aeef;
-    box-shadow: 0 4px 2px -2px gray;
+    box-shadow: 0 4px 5px -2px rgba(68,68,68,0.6);
   }
 }
