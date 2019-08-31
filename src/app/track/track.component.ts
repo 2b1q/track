@@ -268,13 +268,13 @@ export class TrackComponent implements OnInit {
             .setLngLat(e.lngLat)
             .setHTML(
               `
-            <br><h6 style="font-size:14px;color:#666;">Скорость: <span style="font-size:16px;color:#444;">${data.currentSpeed}</span> км/ч</h6>
-            <h6 style="font-size:14px;color:#666; margin-top: 10px;">Осевая нагрузка:</h6>
-            <h6 style="font-size:14px;color:#666;"> &nbsp;Ось 1: <span style="font-size:16px;color:#444;">${data.snapshot.data[0].weight} кг</span></h6>
-            <h6><span class="badge badge-primary">ось 2</span><span class="badge badge-pill badge-success">${data.snapshot.data[1].weight} кг</span></h6>
-            <h6><span class="badge badge-primary">ось 3</span><span class="badge badge-pill badge-success">${data.snapshot.data[2].weight} кг</span></h6>
-            <h6><span class="badge badge-primary">ось 4</span><span class="badge badge-pill badge-success">${data.snapshot.data[3].weight} кг</span></h6>
-            <h6><span class="badge badge-primary">ось 5</span><span class="badge badge-pill badge-success">${data.snapshot.data[4].weight} кг</span></h6>
+            <br><h6 style="font-size:14px;color:#777;">Скорость: <span style="font-size:16px;color:#444;">${data.currentSpeed}</span> км/ч</h6>
+            <h6 style="font-size:14px;color:#777; margin-top: 20px;">Осевая нагрузка:</h6>
+            <h6 style="font-size:14px;color:#777;"> &nbsp;ось 1: <span style="margin-left: 10px; font-size:14px;color:#444;">${data.snapshot.data[0].weight}</span> кг</h6>
+            <h6 style="font-size:14px;color:#777;"> &nbsp;ось 2: <span style="margin-left: 10px; font-size:14px;color:#444;">${data.snapshot.data[1].weight}</span> кг</h6>
+            <h6 style="font-size:14px;color:#777;"> &nbsp;ось 3: <span style="margin-left: 10px; font-size:14px;color:#444;">${data.snapshot.data[2].weight}</span> кг</h6>
+            <h6 style="font-size:14px;color:#777;"> &nbsp;ось 4: <span style="margin-left: 10px; font-size:14px;color:#444;">${data.snapshot.data[3].weight}</span> кг</h6>
+            <h6 style="font-size:14px;color:#777;"> &nbsp;ось 5: <span style="margin-left: 10px; font-size:14px;color:#444;">${data.snapshot.data[4].weight}</span> кг</h6>
 
             `
             )
