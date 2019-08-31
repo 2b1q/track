@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { NgSwitcheryModule } from 'angular-switchery-ios';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
@@ -31,6 +32,7 @@ import { SmallVideoJSComponent } from './video_small/video.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    NgSwitcheryModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [MapService, TrackService, AxisService],

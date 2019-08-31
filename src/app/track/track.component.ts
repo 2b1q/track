@@ -43,10 +43,11 @@ export class TrackComponent implements OnInit {
   private panToToggle: boolean;
   private axelToggle = true;
 
-  constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {}
+  constructor(private route: ActivatedRoute, private mapService: MapService, private axis: AxisService) {
+    this.myInnerHeight = `${window.innerHeight - 300}px !important`;
+  }
 
   addRandom(min, max): number {
-    this.myInnerHeight = `${window.innerHeight - 300}px`
     return Math.round(Math.random() * (max - min) + min);
   }
 

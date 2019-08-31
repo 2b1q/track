@@ -56,6 +56,7 @@ h5{
   width: 100%;
   border-bottom: 1px solid #e9e9e9;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 .cname,.cinfo{
   display: inline-block;
@@ -70,8 +71,8 @@ h5{
   width: 40%;
 }
 .panel_video{
+  margin-top: 30px;
   border-radius: 4px;
   box-shadow: 0 0 3px 0 rgba(0,0,0,.2);
-  padding: 0 16px;
-  padding-bottom: 12px;
+  padding: 16px;
 }
