@@ -31,7 +31,7 @@
     "leaflet-omnivore": "^0.3.4",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^1.2.1",
-    "npm": "^6.11.2",
+    "npm": "^9.6.6",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "video.js": "^7.6.0",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.0",
-    "@angular/cli": "~8.2.0",
+    "@angular/cli": "~16.0.0",
     "@angular/compiler-cli": "~8.2.0",
     "@angular/language-service": "~8.2.0",
     "@types/hls.js": "^0.12.4",
